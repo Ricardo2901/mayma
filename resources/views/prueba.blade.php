@@ -45,11 +45,11 @@
         $post -> save();    //Guardar datos */
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $post = Post::find(1);
+        /*$post = Post::find(1);
         return $post -> is_active;
         echo $post -> is_active;
         return $post -> published_at -> format('d/m/Y');
-        //echo $post -> published_at -> diffForHumans();
+        //echo $post -> published_at -> diffForHumans();*/
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -13,6 +13,7 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
         $post = new Post();
 
         $post -> title = 'Title 1';
@@ -21,5 +22,10 @@ class PostSeeder extends Seeder
         $post -> published_at = now();
 
         $post -> save();
+
+        */
+        //User::factory(10)->create();
+
+        Post::factory(100)->create();
     }
 }
