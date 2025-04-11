@@ -9,13 +9,10 @@ Route::get('/', function () {
 });
 
 Route::get('/prueba', function () {
-    $id = 1;
-    $title = "Title 4";
+    //return view('prueba');
+    $post = Post::find(1);
+    //return $post -> created_at -> diffForHumans();
 
-    $post =  Post::where('title', $title) -> get();
-
-    $post -> delete();
-
-    //return $post; 
+    return $post -> is_active;
 });
 ?>

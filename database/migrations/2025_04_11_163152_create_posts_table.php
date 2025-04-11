@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
-            $table->text('asunto');
+            $table->string('asunto');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
+            $table->boolean('is_active')->default(true);
         });
     }
 
