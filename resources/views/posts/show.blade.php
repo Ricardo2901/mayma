@@ -17,7 +17,7 @@
         Editar el perfil
     </a>
     <br><br>
-    <a href="/posts{{ $post -> id }}/remove">
+    <a href="/posts/{{ $post -> id }}/remove">
         Eliminar estos datos
     </a>
 </body>

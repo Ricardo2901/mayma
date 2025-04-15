@@ -22,7 +22,7 @@ Route::put('/posts/{post}', [PostController::class, 'update']);
 
 Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
-Route::get('/posts', [PostController::class, 'delete']);
+Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 //Route::get('/users', [PostController::class, 'index']);
 /*

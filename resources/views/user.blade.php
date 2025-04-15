@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1><a href="/create/posts">Generar datos</a></h1>
     <h1>
         Aqui se mostraran los posts:
         @foreach ($post as $posts)

@@ -68,10 +68,11 @@ class PostController extends Controller
         return view ('posts.delete', compact('post'));
     }
 
-    public function delete($post) {
-        $post = Post::find($post);
-        $post = delete();
+    public function destroy($post) {
+        $post = Post::findOrFail($post);
+        $post -> delete();
 
-        return redirect('/posts');
+        return "Eliminacion de datos satisfactoriamente: {$post}";
+        //return redirect() -> route('posts.user') -> with ('success', 'Datos eliminados correctamente');
     }
 }
