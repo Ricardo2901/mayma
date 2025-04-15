@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <h1><a href="/create/posts">Generar datos</a></h1>
@@ -17,5 +18,7 @@
             </li>
         @endforeach
     </h1>
+
+    {{ $post -> links() }}
 </body>
 </html>

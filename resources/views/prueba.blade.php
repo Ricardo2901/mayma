@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 <body>
     <?php
         //Uso de las librerias
-        use Illuminate\Support\Facades\Route;
+        /*use Illuminate\Support\Facades\Route;
         use App\Models\User;
         use App\Models\Post;
 
@@ -64,10 +64,22 @@
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     ?>
 
-    <p>{{ $post -> is_active}}</p>
-    <p>{{ $post -> published_at -> format('d/m/Y') }}</p>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tailwind desde CDN</title>
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-blue-600">¡Hola desde Tailwind CDN!</h1>
+        <p class="mt-2 text-gray-700">Esto está funcionando sin instalación local.</p>
+    </div>
 </body>
 </html>

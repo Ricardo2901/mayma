@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Post;
 
+Route::get('/prueba', function () {
+    return view('prueba');
+});
+
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/posts', [PostController::class, 'index']);

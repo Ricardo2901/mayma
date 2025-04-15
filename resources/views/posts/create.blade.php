@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Aqui se generan los datos hacia la base de datos:</h1>
     <form action="/posts" method="POST">
         @csrf   <!-- Token de autenticidad-->
 

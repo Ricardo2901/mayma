@@ -8,7 +8,7 @@ use App\Models\Post;
 class PostController extends Controller
 {
     public function index() {
-        $post = Post::orderBy('id', 'desc') -> get();
+        $post = Post::orderBy('id', 'desc') -> paginate(5);
         //$post = Post::all();
         //return $post;
         return view('user', compact('post'));
@@ -72,7 +72,8 @@ class PostController extends Controller
         $post = Post::findOrFail($post);
         $post -> delete();
 
-        return "Eliminacion de datos satisfactoriamente: {$post}";
+        return redirect('/posts');
+        //return "Eliminacion de datos satisfactoriamente: {$post -> id}";
         //return redirect() -> route('posts.user') -> with ('success', 'Datos eliminados correctamente');
     }
 }
