@@ -8,7 +8,7 @@ use App\Models\Post;
 class PostController extends Controller
 {
     public function index() {
-        $post = Post::orderBy('id', 'desc') -> paginate(5);
+        $post = Post::orderBy('id', 'desc') -> paginate(20);
         //$post = Post::all();
         //return $post;
         return view('user', compact('post'));

@@ -1,85 +1,34 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php
-        //Uso de las librerias
-        /*use Illuminate\Support\Facades\Route;
-        use App\Models\User;
-        use App\Models\Post;
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Ver los datos
-        //$post = new Post;
-        //$post = Post::find(1);
-        //$post -> get();
-
-        //echo $post;
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Letra de los datos insertados o del texto
-        //$post = new Post;
-        //$post -> title = strtoupper('TITULO DE PRUEBA');  //Datos en Mayuscula
-        //$post -> title = strtolower('titulo de prueba');  //Datos en minuscula
-        //$post -> title = ucwords('Titulo De Prueba');     //Datos Capitilizados
-        //$post -> title = ucfirst('Titulo de prueba');     //Datos en Primer letra en Mayuscula
-        //$post -> body = 'Contenido';
-        //$post -> asunto = 'Asunto';
-
-        //return $post;
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Crear, Actualizar, Eliminar datos
-        /*$id = 1;
-        $title = "Title 4";
-    
-        $post = Post::where('title', $title);  //Para ciertos datos
-        $post = Post::find(1);  //Para un dato especifico
-    
-        $post -> update();  //Actualizar datos
-        $post -> delete();  //Eliminar datos
-        $post -> save();    //Guardar datos */
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*$post = Post::find(1);
-        return $post -> is_active;
-        echo $post -> is_active;
-        return $post -> published_at -> format('d/m/Y');
-        //echo $post -> published_at -> diffForHumans();*/
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ?>
-
-
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tailwind desde CDN</title>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <title>Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .centrar{
+            justify-content: center;
+            align-items: center;
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h1 class="text-2xl font-bold text-blue-600">¡Hola desde Tailwind CDN!</h1>
-        <p class="mt-2 text-gray-700">Esto está funcionando sin instalación local.</p>
+    <div>
+        <x-navbar>
+            <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
+        </x-navbar>
+        <y-style1></y-style1>
     </div>
+    <br>
+    <br>
+    <br>
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>

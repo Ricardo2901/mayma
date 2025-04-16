@@ -12,11 +12,14 @@ Route::get('/prueba', function () {
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/posts', [PostController::class, 'index']);
+//Route::get('/home', [HomeController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index']) -> name('posts.index');
 
-Route::get('/create/posts', [PostController::class, 'createPost']);
+//Route::get('/posts/create', [PostController::class, 'createPost']);
+Route::get('/create/posts', [PostController::class, 'createPost']) -> name('posts.create');
 
-Route::post('/posts', [PostController::class, 'store']);
+//Route::post('/posts', [PostController::class, 'store']);
+Route::post('/posts', [PostController::class, 'store']) -> name('posts.store');
 
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
