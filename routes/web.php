@@ -6,12 +6,17 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Post;
 
+//GLOBAL:
+Route::get('/login', function () {
+    return view('login');
+});
+
 Route::get('/version', function () {
     return view('pages.admin.acerca');
 });
 
 
-//PRUEBAS:
+//PRUEBAS DE BACKEND:
 Route::get('/', [HomeController::class, 'index']);
 
 //Route::get('/home', [HomeController::class, 'index']);
