@@ -15,9 +15,15 @@ Route::get('/prueba', function () {
     return view('prueba');
 });
 
-Route::get('/version', function () {
+Route::get('/admin/version', function () {
     return view('pages.admin.acerca');
 });
+
+Route::get('/admin/administradores', [PostController::class, 'index']) -> name('pages.admin.admin');
+
+/*Route::get('/admin/administradores', function () {
+    return view('pages.admin.admin');
+});*/
 
 
 //PRUEBAS DE BACKEND:

@@ -18,7 +18,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <li><a class="dropdown-item" href="#">Usuarios</a></li>
-            <li><a class="dropdown-item" href="#">Administradores</a></li>
+            <li><a class="dropdown-item" href="/admin/administradores">Administradores</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Lista de Usuarios</a></li>
           </ul>

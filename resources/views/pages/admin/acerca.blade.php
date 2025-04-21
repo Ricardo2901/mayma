@@ -49,7 +49,9 @@
         <x-navbar>
             <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
         </x-navbar>
-        <x-colortheme></x-colortheme>
+        <x-colortheme>
+            <!-- Este es el interior del componente de cambio de tema -->
+        </x-colortheme>
     </div>
     <br>
     <br>
@@ -60,7 +62,6 @@
         <li><span class="label">📦 Versión:</span> v1.0.0</li>
         <li><span class="label">📝 Descripción:</span> Aplicación para gestionar archivos.</li>
         <li><span class="label">👤 Autor:</span> Ricardo Blanco</li>
-        <li><span class="label">📧 Contacto:</span> juan@example.com</li>
         <li><span class="label">📄 Licencia:</span> MIT</li>
         <li><span class="label">🛠 Tecnologías:</span> Laravel, MySQL, Bootstrap</li>
         <li><span class="label">🔐 Seguridad:</span> Autenticación con Laravel Breeze, protección CSRF y validación de formularios.</li>
@@ -69,7 +70,6 @@
     </ul>
     <br><br>
     <x-footer></x-footer>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <x-script></x-script>
 </body>
 </html>
