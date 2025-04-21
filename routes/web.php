@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Post;
 
-Route::get('/prueba', function () {
-    return view('prueba');
+Route::get('/version', function () {
+    return view('pages.admin.acerca');
 });
 
+
+//PRUEBAS:
 Route::get('/', [HomeController::class, 'index']);
 
 //Route::get('/home', [HomeController::class, 'index']);
@@ -31,8 +33,7 @@ Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
-//Route::get('/users', [PostController::class, 'index']);
-/*
-Route::get('/post/{post}', [PostController::class, 'sh']);
-*/
+//ADMINISTRADOR:
+
+//USUARIOS:
 ?>
