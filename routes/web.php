@@ -11,13 +11,17 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/prueba', function () {
+    return view('prueba');
+});
+
 Route::get('/version', function () {
     return view('pages.admin.acerca');
 });
 
 
 //PRUEBAS DE BACKEND:
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']) -> name ('home');
 
 //Route::get('/home', [HomeController::class, 'index']);
 Route::get('/posts', [PostController::class, 'index']) -> name('posts.index');

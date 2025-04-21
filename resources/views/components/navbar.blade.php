@@ -33,10 +33,10 @@
             Nombre de Usuario
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="{{ route('posts.index') }}">Cerrar Sesion</a></li>
+            <li><a class="dropdown-item" href="{{ route('home') }}">Cerrar Sesion</a></li>
             <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
           </ul>
         </li>
       </ul>
