@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Post;
@@ -23,7 +24,8 @@ Route::get('/admin/perfil', function () {
     return view('pages.admin.perfil');
 });
 
-Route::get('/admin/administradores', [PostController::class, 'index']) -> name('pages.admin.admin');
+//PRUEBAS DE FRONTEND:
+Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');
 
 //Route::get('/admin/perfil', [PostController::class, 'index']) -> name('pages.admin.perfil');
 

@@ -11,19 +11,27 @@
     <br>
     <br>
     <br>
+    <h1 class="h1" style="margin-left: 2.5%;">Administradores</h1>
+    <br>
     <table class="table table-bordered mx-auto" style="width: 95%;">
         <thead>
             <tr>
+                <th scope="col">Usuario</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Descripción</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Estado</th>
                 <th scope="col"><center>Acciones</center></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($post as $posts)
+            @foreach ($admin as $admins)
                 <tr>
-                    <td>{{ $posts -> title }}</td>
-                    <td>{{ $posts -> body }}</td>
+                    <td>{{ $admins -> username }}</td>
+                    <td>{{ $admins -> name }}</td>
+                    <td>{{ $admins -> email }}</td>
+                    <td>{{ $admins -> role }}</td>
+                    <td>{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <td><center>
                         <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
@@ -41,7 +49,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        En progreso ...
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
@@ -83,7 +91,7 @@
                     Esta acción no se puede deshacer.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>

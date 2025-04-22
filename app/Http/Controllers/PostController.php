@@ -19,7 +19,7 @@ class PostController extends Controller
         $post = Post::find($post);
 
         //return $post;
-        return view ('/posts.show', compact('post'));
+        return view ('posts.show', compact('post'));
         //return view('show', [
             //'post' => 'postal para hackear el sistemac',
         //]);
