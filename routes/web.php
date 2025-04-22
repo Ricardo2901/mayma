@@ -19,7 +19,13 @@ Route::get('/admin/version', function () {
     return view('pages.admin.acerca');
 });
 
+Route::get('/admin/perfil', function () {
+    return view('pages.admin.perfil');
+});
+
 Route::get('/admin/administradores', [PostController::class, 'index']) -> name('pages.admin.admin');
+
+//Route::get('/admin/perfil', [PostController::class, 'index']) -> name('pages.admin.perfil');
 
 /*Route::get('/admin/administradores', function () {
     return view('pages.admin.admin');

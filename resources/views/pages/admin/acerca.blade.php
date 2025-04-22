@@ -49,9 +49,7 @@
         <x-navbar>
             <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
         </x-navbar>
-        <x-colortheme>
-            <!-- Este es el interior del componente de cambio de tema -->
-        </x-colortheme>
+        
     </div>
     <br>
     <br>
@@ -61,7 +59,7 @@
         <li><span class="label">📛 Nombre:</span> Gestor de Archivos</li>
         <li><span class="label">📦 Versión:</span> v1.0.0</li>
         <li><span class="label">📝 Descripción:</span> Aplicación para gestionar archivos.</li>
-        <li><span class="label">👤 Autor:</span> Ricardo Blanco</li>
+        <li><span class="label">👤 Desarrollado por:</span> Mayma Ambiental</li>
         <li><span class="label">📄 Licencia:</span> MIT</li>
         <li><span class="label">🛠 Tecnologías:</span> Laravel, MySQL, Bootstrap</li>
         <li><span class="label">🔐 Seguridad:</span> Autenticación con Laravel Breeze, protección CSRF y validación de formularios.</li>
@@ -69,7 +67,10 @@
         <li><span class="label">🙋 Usado por:</span> Actual Usuario</li>
     </ul>
     <br><br>
-    <x-footer></x-footer>
+    <x-colortheme>
+            <!-- Este es el interior del componente de cambio de tema -->
+    </x-colortheme>
+    <x-completeFooter></x-completeFooter>
     <x-script></x-script>
 </body>
 </html>

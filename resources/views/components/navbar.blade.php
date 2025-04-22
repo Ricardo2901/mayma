@@ -27,7 +27,8 @@
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
         </li>
       </ul>
-      <ul class="nav justify-content-end my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px; color: white;">
+      <!-- Aquí agregamos un contenedor para empujar el dropdown a la derecha -->
+      <ul class="navbar-nav ms-auto"> <!-- ms-auto: margin-start auto en Bootstrap 5 -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
             Nombre de Usuario
