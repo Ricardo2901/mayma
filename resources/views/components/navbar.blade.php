@@ -10,17 +10,17 @@
           <a class="nav-link active" aria-current="page" href="#">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Archivos</a>
+          <a class="nav-link" href=" {{ route('pages.admin.files') }}">Archivos</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Usuarios
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Usuarios</a></li>
-            <li><a class="dropdown-item" href="/admin/administradores">Administradores</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.admin.users') }}">Usuarios</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.admin.admin') }}">Administradores</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Lista de Usuarios</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.admin.allusers') }}">Todos los Usuarios</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -35,7 +35,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <li><a class="dropdown-item" href="{{ route('home') }}">Cerrar Sesion</a></li>
-            <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.admin.perfil') }}">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Configuración</a></li>
           </ul>

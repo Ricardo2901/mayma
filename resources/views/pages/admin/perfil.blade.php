@@ -102,7 +102,7 @@
                     </div>
                     <div class="modal-body">
                         <p>¿Estas seguro de eliminar tus datos?
-                        Esta acción no se puede deshacer.</p>
+                        Esta acción no se puede deshacer. Volveras a la pagina de inicio.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>

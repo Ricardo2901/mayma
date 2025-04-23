@@ -15,4 +15,8 @@ class AdminController extends Controller
         return view('pages.admin.admin', compact('admin'));
         
     }
+
+    public function showProfile() {
+        return view('pages.admin.perfil');
+    }
 }
