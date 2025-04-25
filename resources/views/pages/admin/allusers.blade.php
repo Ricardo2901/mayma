@@ -6,12 +6,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
     <!-- DataTables Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
-    <title>Lista de Administradores</title>
+    <title>Todos los Usuarios</title>
 </head>
 <body>
     <x-navbar></x-navbar>
@@ -36,38 +35,37 @@
                 </tr>
             </thead>
             <tbody>
-                
+                @foreach ($allUser as $allUsers)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $allUsers -> avatar}}</td>
+                    <td>{{ $allUsers -> username }}</td>
+                    <td>{{ $allUsers -> name }}</td>
+                    <td>{{ $allUsers -> email }}</td>
+                    <td>{{ $allUsers -> last_login }}</td>
+                    <td>{{ $allUsers -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos" disable>Editar</button> | 
+                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
                     </center></td>
                 </tr>
-                
+                @endforeach 
             </tbody>
             <!-- Modal para editar los datos -->
             <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Esta funcion esta restringida. Favor de ir a su respectivo apartado para agregar el usuario.</p>
+                            ...
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success">Administradores</button>
-                            <button type="button" class="btn btn-info">Usuarios</button>
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
                         </div>
                     </div>
                 </div>
@@ -81,7 +79,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Proximamente ...
+                            ...
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
@@ -96,16 +94,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta funcion esta restringida. Favor de ir a su respectivo apartado para agregar el usuario.</p>
+                    <p>¿Estas seguro de eliminar estos datos?
+                    Esta acción no se puede deshacer.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success">Administradores</button>
-                    <button type="button" class="btn btn-info">Usuarios</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -115,20 +113,22 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Datos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta funcion esta restringida. Favor de ir a su respectivo apartado para agregar el usuario.</p>
+                    <p>En proceso...</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success">Administradores</button>
-                    <button type="button" class="btn btn-info">Usuarios</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success">Agregar</button>
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 
     <!-- Interruptor del modo oscuro/claro -->
     <x-colortheme></x-colortheme>

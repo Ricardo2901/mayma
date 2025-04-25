@@ -45,4 +45,5 @@
   </div>
 </nav>
 
+<!-- Offcanvas de la configuración -->
 <x-offcanvas></x-offcanvas>
