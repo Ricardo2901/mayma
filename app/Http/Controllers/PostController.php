@@ -11,7 +11,7 @@ class PostController extends Controller
         $post = Post::orderBy('id', 'desc') -> paginate(20);
         //$post = Post::all();
         //return $post;
-        return view('pages.admin.admin', compact('post'));
+        return view('user', compact('post'));
         
     }
 

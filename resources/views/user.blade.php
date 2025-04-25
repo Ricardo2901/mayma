@@ -28,6 +28,7 @@
                     <td>{{ $posts -> title }}</td>
                     <td>{{ $posts -> body }}</td>
                     <td>{{ $posts -> asunto }}</td>
+                    <td>{{ \Carbon\Carbon::parse($posts->created_at)->format('d/m/Y H:i') }}</td>
                     <td><a href="/posts/{{ $posts -> id}}/edit">Editar</a></td>
                     <td><a href="/posts/{{ $posts -> id}}/remove">Eliminar</a></td>
                     <td><a href="/posts/{{ $posts -> id}}">Ver</a></td>

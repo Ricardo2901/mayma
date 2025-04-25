@@ -16,7 +16,7 @@ Route::get('/login', function () {
 });
 
 Route::get('/prueba', function () {
-    return view('prueba');
+    return view('user');
 });
 
 Route::get('/admin/version', function () {
@@ -56,6 +56,7 @@ Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+
 
 //ADMINISTRADOR:
 Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores

@@ -24,7 +24,8 @@ class User extends Model
 
     protected function casts(): array {
         return [
-            'published_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
             'is_active' => 'boolean',
         ];
     }

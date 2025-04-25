@@ -28,9 +28,9 @@
                     <th>Avatar</th>
                     <th>Nombre de Usuario</th>
                     <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Ultima vez</th>
                     <th>Estatus</th>
+                    <th>Ultima vez</th>
+                    <th>En Linea...</th>
                     <th><center>Acciones</center></th>
                 </tr>
             </thead>
@@ -40,92 +40,137 @@
                     <td>{{ $allUsers -> avatar}}</td>
                     <td>{{ $allUsers -> username }}</td>
                     <td>{{ $allUsers -> name }}</td>
-                    <td>{{ $allUsers -> email }}</td>
+                    <td>{{ $allUsers -> rol }}</td>
                     <td>{{ $allUsers -> last_login }}</td>
                     <td>{{ $allUsers -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
+                        @if($allUsers -> type_user == 'admin')
+                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Editar</button> | 
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Eliminar</button> |
+                        
+                        @else
+                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Editar</button> | 
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Eliminar</button> | 
+                        
+                        @endif    
+                            <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{  $allUsers -> username }}">Ver</button>
                     </center></td>
                 </tr>
+
+                <!-- Modal para ver los datos -->
+                <div class="modal fade" id="verDatos{{ $allUsers -> username }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="inputPassword5" class="form-label">Usuario</label>
+                                <input class="form-control" value="{{ $allUsers -> username }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Nombre</label>
+                                <input class="form-control" value="{{ $allUsers -> name }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Correo</label>
+                                <input class="form-control" value="{{ $allUsers -> email }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Creacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('H:i') }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Actualizacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('H:i') }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Ultima Vez</label>
+                                <input class="form-control" value="{{ $allUsers -> last_login}}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">En Linea...</label>
+                                <input class="form-control" value="{{ $allUsers -> is_active == 1 ? 'Activo' : 'Inactivo' }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Rol</label>
+                                <input class="form-control" value="{{ $allUsers -> rol}}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modales en caso de que sea Administrador -->
+                <!-- Modal para editar los datos -->
+                <div class="modal fade" id="editarDatos{{ $allUsers -> rol}}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Esta funcion esta restringida. Por favor, ir al apartado para hacer alguna actualizacion de datos.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                @if($allUsers -> type_user == 'admin')
+                                    <form action="{{ route('pages.admin.admin') }}" method="GET">
+                                        <button type="submit" class="btn btn-success">Administradores</button>
+                                    </form>
+                                @elseif($allUsers -> type_user == 'user')
+                                    <form action="{{ route('pages.admin.users') }}" method="GET">
+                                        <button type="submit" class="btn btn-primary">Usuarios</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para eliminar los datos -->
+                <div class="modal fade" id="eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Esta funcion esta restringida. Por favor, ir al apartado para eliminar estos datos.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                @if($allUsers -> type_user == 'admin')
+                                    <form action="{{ route('pages.admin.admin') }}" method="GET">
+                                        <button type="submit" class="btn btn-success">Administradores</button>
+                                    </form>
+                                @elseif($allUsers -> type_user == 'user')
+                                    <form action="{{ route('pages.admin.users') }}" method="GET">
+                                        <button type="submit" class="btn btn-primary">Usuarios</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach 
-            </tbody>
-            <!-- Modal para editar los datos -->
-            <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para ver los datos -->
-            <div class="modal fade" id="verDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </tbody>  
         </table>
     </div>
-    <!-- Modal para eliminar los datos -->
-    <div class="modal fade" id="eliminarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estas seguro de eliminar estos datos?
-                    Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <!-- Modal para agregar datos -->
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Datos</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Restringido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>En proceso...</p>
+                    <p>Esta funcion esta restringida. Por favor, ir al apartado para agregar un usuario.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Agregar</button>
+                    <button type="button" class="btn btn-success">Admnistradores</button>
+                    <button type="button" class="btn btn-primary">Usuarios</button>
                 </div>
             </div>
         </div>
     </div>
+
+    
     <br>
     <br>
     <br>
