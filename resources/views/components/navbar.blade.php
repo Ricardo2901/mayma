@@ -37,10 +37,12 @@
             <li><a class="dropdown-item" href="{{ route('home') }}">Cerrar Sesion</a></li>
             <li><a class="dropdown-item" href="{{ route('pages.admin.perfil') }}">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ route('pages.admin.settings') }}">Configuración</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Configuración</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<x-offcanvas></x-offcanvas>

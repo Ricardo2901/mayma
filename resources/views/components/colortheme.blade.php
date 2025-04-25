@@ -264,6 +264,19 @@
         box-shadow: 0 0 0 0.2rem rgba(0,0,0,0.2) !important;
         outline: none;
     }
+
+    /* Estilo para el offcanvas en modo oscuro */
+    .dark-theme .offcanvas {
+        background-color: #1e1e1e;
+        color: #fff;
+    }
+
+    /* Estilo para la lista del offcanvas */
+    .dark-theme .list-group-item {
+        background-color: #2c2c2c;
+        background-color: #1e1e1e;
+        color: #fff;
+    }
 </style>
 
 <script>
