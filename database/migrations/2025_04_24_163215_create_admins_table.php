@@ -23,6 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('last_login')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('type_user')->default('admin');
+            $table->string('rol')->default('Administrador');
         });
     }
 
