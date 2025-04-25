@@ -37,12 +37,12 @@
             <tbody>
                 @foreach ($admin as $admins)
                 <tr>
-                    <td>{{ $users -> avatar}}</td>
-                    <td>{{ $users -> username }}</td>
-                    <td>{{ $users -> name }}</td>
-                    <td>{{ $users -> email }}</td>
-                    <td>{{ $users -> last_login }}</td>
-                    <td>{{ $users -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
+                    <td>{{ $admins -> avatar}}</td>
+                    <td>{{ $admins -> username }}</td>
+                    <td>{{ $admins -> name }}</td>
+                    <td>{{ $admins -> email }}</td>
+                    <td>{{ $admins -> last_login }}</td>
+                    <td>{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
                         <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 

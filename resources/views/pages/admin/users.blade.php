@@ -126,6 +126,9 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 
     <!-- Interruptor del modo oscuro/claro -->
     <x-colortheme></x-colortheme>

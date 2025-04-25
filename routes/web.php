@@ -62,6 +62,8 @@ Route::get('/admin/administradores', [AdminController::class, 'index']) -> name(
 
 Route::get('/admin/usuarios', [UserController::class, 'index']) -> name('pages.admin.users');           //Muestra los datos de los usuarios
 
+Route::get('/admin/configuracion', [AdminController::class, 'config']) -> name('pages.admin.settings');     //Muestra la configuracion del administrador
+
 Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pages.admin.perfil');     //Muestra el perfil del administrador
 
 Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pages.admin.allusers');  //Muestra el perfil de los usuarios/admnistradores

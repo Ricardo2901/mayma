@@ -8,6 +8,7 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    
     public function index() {
         $admin = Admin::all();
         //$post = Post::all();
@@ -18,5 +19,9 @@ class AdminController extends Controller
 
     public function showProfile() {
         return view('pages.admin.perfil');
+    }
+
+    public function config() {
+        return view('pages.admin.configure');
     }
 }

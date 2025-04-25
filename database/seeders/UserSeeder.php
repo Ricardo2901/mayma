@@ -15,11 +15,14 @@ class UserSeeder extends Seeder
     {
         /*
         $user = new User();
+        $user -> username = 'alondramedina';
         $user -> name = 'Alondra Medina';
         $user -> email = 'alondra@email.com';
         $user -> password = '12345678';
-        $user -> save(); */
+        $user -> save(); 
+        */
 
-        User::factory(10)->create();
+        User::factory()->count(200)->create();
+        //User::factory(100)->create();
     }
 }
