@@ -37,11 +37,17 @@
             <tbody>
                 @foreach ($allUser as $allUsers)
                 <tr>
-                    <td>{{ $allUsers -> avatar}}</td>
+                    <td><center>
+                        <img src="{{ asset($allUsers -> avatar) }}" alt="Avatar" class="rounded-circle" width="40" height="40"> <!-- Avatar del usuario -->
+                    </center></td>
                     <td>{{ $allUsers -> username }}</td>
                     <td>{{ $allUsers -> name }}</td>
                     <td>{{ $allUsers -> rol }}</td>
-                    <td>{{ $allUsers -> last_login }}</td>
+                    @if($allUsers -> last_login == null) <!-- Si no hay fecha de inicio de sesion -->
+                        <td>Sin Acceder</td>
+                    @else
+                        <td>{{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('H:i') }} hrs.</td>
+                    @endif
                     <td>{{ $allUsers -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>

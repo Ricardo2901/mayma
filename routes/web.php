@@ -57,11 +57,15 @@ Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ADMINISTRADOR:
 Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
 
+Route::post('/admin/administradores', [AdminController::class, 'created']) -> name('pages.admin.create');   //Crea un nuevo admnistrador
+
 Route::put('/admin/administradores/{admin}', [AdminController::class, 'update']) -> name('pages.admin.update');   //Actualiza los datos de los admnistradores
+
+Route::delete('/admin/administradores/{admin}', [AdminController::class, 'delete']) -> name('pages.admin.delete');   //Muestra el formulario para eliminar un admnistrador
 
 Route::get('/admin/usuarios', [UserController::class, 'index']) -> name('pages.admin.users');           //Muestra los datos de los usuarios
 
@@ -73,5 +77,6 @@ Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pa
 
 Route::get('/admin/archivo', [FileController::class, 'index']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //USUARIOS:
 ?>
