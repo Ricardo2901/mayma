@@ -46,12 +46,12 @@
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
                         @if($allUsers -> type_user == 'admin')
-                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Editar</button> | 
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Eliminar</button> |
+                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> type_user }}{{ $allUsers -> id}}">Editar</button> | 
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> type_user }}{{ $allUsers -> id}}">Eliminar</button> |
                         
                         @else
-                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Editar</button> | 
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}">Eliminar</button> | 
+                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $allUsers -> type_user }}{{ $allUsers -> id}}">Editar</button> | 
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $allUsers -> type_user }}{{ $allUsers -> id}}">Eliminar</button> | 
                         
                         @endif    
                             <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{  $allUsers -> username }}">Ver</button>
@@ -78,7 +78,11 @@
                                 <label for="inputPassword5" class="form-label">Fecha de Actualizacion</label>
                                 <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> created_at) -> format('H:i') }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
                                 <label for="inputPassword5" class="form-label">Ultima Vez</label>
-                                <input class="form-control" value="{{ $allUsers -> last_login}}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @if($allUsers -> last_login == null)
+                                    <input class="form-control" value="Nunca" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @else
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @endif
                                 <label for="inputPassword5" class="form-label">En Linea...</label>
                                 <input class="form-control" value="{{ $allUsers -> is_active == 1 ? 'Activo' : 'Inactivo' }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
                                 <label for="inputPassword5" class="form-label">Rol</label>
@@ -91,9 +95,9 @@
                     </div>
                 </div>
                 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-                <!-- Modales en caso de que sea Administrador -->
-                <!-- Modal para editar los datos -->
-                <div class="modal fade" id="editarDatos{{ $allUsers -> rol}}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!-- Modales para los usuarios -->
+                <!-- Modal para editar los datos (DESACTIVADA) -->
+                <div class="modal fade" id="editarDatos{{ $allUsers -> type_user}}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -105,11 +109,11 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                                @if($allUsers -> type_user == 'admin')
+                                @if($allUsers -> type_user == 'admin') <!-- Si el usuario es admin -->
                                     <form action="{{ route('pages.admin.admin') }}" method="GET">
                                         <button type="submit" class="btn btn-success">Administradores</button>
                                     </form>
-                                @elseif($allUsers -> type_user == 'user')
+                                @elseif($allUsers -> type_user == 'user') <!-- Si el usuario es user -->
                                     <form action="{{ route('pages.admin.users') }}" method="GET">
                                         <button type="submit" class="btn btn-primary">Usuarios</button>
                                     </form>
@@ -119,8 +123,8 @@
                     </div>
                 </div>
 
-                <!-- Modal para eliminar los datos -->
-                <div class="modal fade" id="eliminarDatos{{ $allUsers -> rol }}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!-- Modal para eliminar los datos (DESACTIVADA) -->
+                <div class="modal fade" id="eliminarDatos{{ $allUsers -> type_user }}{{ $allUsers -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -132,11 +136,11 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                                @if($allUsers -> type_user == 'admin')
+                                @if($allUsers -> type_user == 'admin') <!-- Si el usuario es admin -->
                                     <form action="{{ route('pages.admin.admin') }}" method="GET">
                                         <button type="submit" class="btn btn-success">Administradores</button>
                                     </form>
-                                @elseif($allUsers -> type_user == 'user')
+                                @elseif($allUsers -> type_user == 'user') <!-- Si el usuario es user -->
                                     <form action="{{ route('pages.admin.users') }}" method="GET">
                                         <button type="submit" class="btn btn-primary">Usuarios</button>
                                     </form>
@@ -150,7 +154,7 @@
         </table>
     </div>
     
-    <!-- Modal para agregar datos -->
+    <!-- Modal para agregar datos (DESACTIVADA) -->
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -163,8 +167,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Admnistradores</button>
-                    <button type="button" class="btn btn-primary">Usuarios</button>
+                    <form action="{{ route('pages.admin.admin') }}" method="GET">
+                        <button type="submit" class="btn btn-success">Administradores</button>
+                    </form>
+                    <form action="{{ route('pages.admin.users') }}" method="GET">
+                        <button type="submit" class="btn btn-primary">Usuarios</button>
+                    </form>
                 </div>
             </div>
         </div>

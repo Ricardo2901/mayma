@@ -252,6 +252,7 @@
         color: #fff !important;
     }
 
+
     /* === Focus para todos los botones Bootstrap en modo oscuro === */
     .dark-theme .btn-primary:focus,
     .dark-theme .btn-secondary:focus,
@@ -274,6 +275,12 @@
     /* Estilo para la lista del offcanvas */
     .dark-theme .list-group-item {
         background-color: #2c2c2c;
+        background-color: #1e1e1e;
+        color: #fff;
+    }
+
+    /* Estilo para la lista de seleccion en modo oscuro */
+    .dark-theme .form-select {
         background-color: #1e1e1e;
         color: #fff;
     }

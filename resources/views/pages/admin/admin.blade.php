@@ -37,77 +37,144 @@
             <tbody>
                 @foreach ($admin as $admins)
                 <tr>
-                    <td>{{ $admins -> avatar}}</td>
-                    <td>{{ $admins -> username }}</td>
-                    <td>{{ $admins -> name }}</td>
-                    <td>{{ $admins -> email }}</td>
-                    <td>{{ $admins -> last_login }}</td>
-                    <td>{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
+                    <td>{{ $admins -> avatar}}</td> <!-- Avatar del usuario -->
+                    <td>{{ $admins -> username }}</td> <!-- Nombre de usuario -->
+                    <td>{{ $admins -> name }}</td> <!-- Nombre del usuario -->
+                    <td>{{ $admins -> email }}</td> <!-- Correo del usuario -->
+                    <td>{{ $admins -> last_login }}</td> <!-- Ultima vez que accedio -->
+                    <td>{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td> <!-- Estado del usuario -->
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
+                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $admins -> id }}">Editar</button> | 
+                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $admins -> id }}">Eliminar</button> | 
+                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $admins -> id }}">Ver</button>
                     </center></td>
                 </tr>
-                @endforeach 
+
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modal para ver los datos -->
+                <div class="modal fade" id="verDatos{{ $admins -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="inputPassword5" class="form-label">Usuario</label>
+                                <input class="form-control" value="{{ $admins -> username }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Nombre</label>
+                                <input class="form-control" value="{{ $admins -> name }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Correo</label>
+                                <input class="form-control" value="{{ $admins -> email }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Creacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($admins -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($admins -> created_at) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Actualizacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($admins -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($admins -> updated_at) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Ultima Vez</label>
+                                @if($admins -> last_login == null) <!-- Si el usuario no ha accedido -->
+                                    <input class="form-control" value="No ha accedido" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @else <!-- Si el usuario ha accedido -->
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @endif
+                                <label for="inputPassword5" class="form-label">En Linea...</label>
+                                <input class="form-control" value="{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Rol</label>
+                                <input class="form-control" value="{{ $admins -> rol}}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modales para EDITAR y ELIMINAR datos -->
+                <!-- Modal para editar los datos -->
+                <div class="modal fade" id="editarDatos{{ $admins -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="{{ route('pages.admin.update', $admins -> id) }}" method="POST">
+                            @csrf   <!-- Token de autenticidad -->
+                            @method('PUT')  <!-- Uso del metodo para poder actulizar los datos -->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <label for="inputPassword5" class="form-label">Usuario</label>
+                                    <input name="username" class="form-control" value="{{ $admins -> username }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Nombre</label>
+                                    <input name="name" class="form-control" value="{{ $admins -> name }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Contraseña</label>
+                                    <input name="password" class="form-control" value="{{ $admins -> password }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Correo</label>
+                                    <input name="email" class="form-control" value="{{ $admins -> email }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Rol</label>
+                                    @if($admins -> rol == 'Administrador') <!-- Si el usuario es Administrador -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $admins -> rol}}</option>
+                                            <option value="Administrador Nv.1">Administrador Nv.1</option>
+                                            <option value="Administrador Nv.2">Administrador Nv.2</option>
+                                            <option value="Administrador Nv.3">Administrador Nv.3</option>
+                                        </select>
+                                    @elseif($admins -> rol == 'Administrador Nv.1') <!-- Si el usuario es un Administrador de Nivel 1 -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $admins -> rol}}</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Administrador Nv.2">Administrador Nv.2</option>
+                                            <option value="Administrador Nv.3">Administrador Nv.3</option>
+                                        </select>
+                                    @elseif($admins -> rol == 'Administrador Nv.2') <!-- Si el usuario es un Administrador de Nivel 2 -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $admins -> rol}}</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Administrador Nv.1">Administrador Nv.1</option>
+                                            <option value="Administrador Nv.3">Administrador Nv.3</option>
+                                        </select>
+                                    @elseif($admins -> rol == 'Administrador Nv.3') <!-- Si el usuario es un Administrador de Nivel 3 -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $admins -> rol}}</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Administrador Nv.1">Administrador Nv.1</option>
+                                            <option value="Administrador Nv.2">Administrador Nv.2</option>
+                                        </select>
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal para eliminar los datos -->
+                <div class="modal fade" id="eliminarDatos{{ $admins -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Estas seguro de eliminar estos datos?
+                                Esta acción no se puede deshacer.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-danger">Eliminar Datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach  
             </tbody>
-            <!-- Modal para editar los datos -->
-            <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para ver los datos -->
-            <div class="modal fade" id="verDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </table>
     </div>
-    <!-- Modal para eliminar los datos -->
-    <div class="modal fade" id="eliminarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estas seguro de eliminar estos datos?
-                    Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Modal para agregar datos -->
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">

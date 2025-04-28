@@ -61,6 +61,8 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 //ADMINISTRADOR:
 Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
 
+Route::put('/admin/administradores/{admin}', [AdminController::class, 'update']) -> name('pages.admin.update');   //Actualiza los datos de los admnistradores
+
 Route::get('/admin/usuarios', [UserController::class, 'index']) -> name('pages.admin.users');           //Muestra los datos de los usuarios
 
 Route::get('/admin/configuracion', [AdminController::class, 'config']) -> name('pages.admin.settings');     //Muestra la configuracion del administrador
