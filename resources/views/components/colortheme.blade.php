@@ -232,24 +232,28 @@
 
     .dark-theme .btn-light {
         background-color: transparent !important;
-        color: #f8f9fa !important;
-        border: 2px solid #f8f9fa !important;
+        /*color: #f8f9fa !important;*/
+        /*border: 2px solid #f8f9fa !important;*/
     }
 
     .dark-theme .btn-light:hover {
-        background-color: #f8f9fa !important;
-        color: #000 !important;
+        /*background-color: #f8f9fa !important;*/
+        /*color: #000 !important;*/
     }
 
     .dark-theme .btn-dark {
         background-color: transparent !important;
-        color: #212529 !important;
-        border: 2px solid #212529 !important;
+        color: #f8f9fa !important;
+        /*color: #212529 !important;*/
+        border: 2px solid #f8f9fa !important;
+        /*border: 2px solid #212529 !important;*/
     }
 
     .dark-theme .btn-dark:hover {
-        background-color: #212529 !important;
-        color: #fff !important;
+        background-color: #f8f9fa !important;
+        /*background-color: #212529 !important;*/
+        color: #000 !important;
+        /*color: #fff !important;*/
     }
 
 

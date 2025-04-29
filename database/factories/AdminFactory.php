@@ -26,7 +26,9 @@ class AdminFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'avatar' => 'images/default_profile.jpg',
             'remember_token' => Str::random(10),
+            'rol'=> 'Administrador Nv.1',
         ];
     }
 

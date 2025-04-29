@@ -25,7 +25,7 @@
         <table id="example" class="table table-striped" style="width:100%;">
             <thead>
                 <tr>
-                    <th>Avatar</th>
+                    <th><center>Avatar</center></th>
                     <th>Nombre de Usuario</th>
                     <th>Nombre</th>
                     <th>Correo</th>
@@ -37,77 +37,139 @@
             <tbody>
                 @foreach ($user as $users)
                 <tr>
-                    <td>{{ $users -> avatar}}</td>
+                    <td><center>
+                        <img src="{{ asset($users -> avatar) }}" alt="Avatar" class="rounded-circle" width="40" height="40"> <!-- Avatar del usuario -->
+                    </center></td>
                     <td>{{ $users -> username }}</td>
                     <td>{{ $users -> name }}</td>
                     <td>{{ $users -> email }}</td>
-                    <td>{{ $users -> last_login }}</td>
+
+                    @if($users -> last_login == null) <!-- Si no hay fecha de que horas cerro sesion -->
+                        <td>Sin Acceder</td>
+                    @else <!-- Si hay fecha de que horas cerro sesion -->
+                        <td>{{ \Carbon\Carbon::parse($users -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($users -> last_login) -> format('H:i') }} hrs.</td>
+                    @endif
+
                     <td>{{ $users -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
+                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $users -> id}}">Editar</button> | 
+                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $users -> id}}">Eliminar</button> | 
+                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $users -> id}}">Ver</button>
                     </center></td>
                 </tr>
+
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modal para editar los datos -->
+                <div class="modal fade" id="editarDatos{{ $users -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <form action=" {{ route('pages.admin.users.update', $users -> id) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <label fsor="inputPassword5" class="form-label">Usuario</label>
+                                    <input name="username" class="form-control" value="{{ $users -> username }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Nombre</label>
+                                    <input name="name" class="form-control" value="{{ $users -> name }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Contraseña</label>
+                                    <input name="password" class="form-control" value="******" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Correo</label>
+                                    <input name="email" class="form-control" value="{{ $users -> email }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <label for="inputPassword5" class="form-label">Rol</label>
+                                    @if($users -> rol == 'Usuario Nv.1') <!-- Si el usuario es Usuario Nivel 1 -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $users -> rol}}</option>
+                                            <option value="Usuario Nv.2">Usuario Nv.2</option>
+                                        </select>
+                                    @elseif($users -> rol == 'Usuario Nv.2') <!-- Si el usuario es un Usuario de Nivel 2 -->
+                                        <select name="rol" class="form-select" aria-label="Default select example">
+                                            <option selected>{{ $users -> rol}}</option>
+                                            <option value="Usuario Nv.2">Usuario Nv.1</option>
+                                        </select>
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary btn-azul">Actualizar Datos</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modal para ver los datos -->
+                <div class="modal fade" id="verDatos{{ $users -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="inputPassword5" class="form-label">Usuario</label>
+                                <input class="form-control" value="{{ $users -> username }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Nombre</label>
+                                <input class="form-control" value="{{ $users -> name }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Correo</label>
+                                <input class="form-control" value="{{ $users -> email }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Creacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($users -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($users -> created_at) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Fecha de Actualizacion</label>
+                                <input class="form-control" value="{{ \Carbon\Carbon::parse($users -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($users -> updated_at) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Ultima Vez</label>
+                                @if($users -> last_login == null) <!-- Si el usuario no ha accedido -->
+                                    <input class="form-control" value="No ha accedido" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @else <!-- Si el usuario ha accedido -->
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                @endif
+                                <label for="inputPassword5" class="form-label">En Linea...</label>
+                                <input class="form-control" value="{{ $users -> is_active == 1 ? 'Activo' : 'Inactivo' }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                <label for="inputPassword5" class="form-label">Rol</label>
+                                <input class="form-control" value="{{ $users -> rol}}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Modal para eliminar los datos -->
+                <div class="modal fade" id="eliminarDatos{{ $users -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="{{ route('pages.admin.users.delete', $users -> id) }}" method="POST">
+                                @csrf   <!-- Token de autenticidad -->
+                                @method('DELETE')  <!-- Uso del metodo para poder actulizar los datos -->
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Estas seguro de eliminar estos datos?
+                                    Esta acción no se puede deshacer.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-danger">Eliminar Datos</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 @endforeach 
             </tbody>
-            <!-- Modal para editar los datos -->
-            <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para ver los datos -->
-            <div class="modal fade" id="verDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca de... </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </table>
     </div>
-    <!-- Modal para eliminar los datos -->
-    <div class="modal fade" id="eliminarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estas seguro de eliminar estos datos?
-                    Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Modal para agregar datos -->
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">

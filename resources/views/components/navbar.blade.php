@@ -28,19 +28,25 @@
         </li>
       </ul>
       <!-- Aquí agregamos un contenedor para empujar el dropdown a la derecha -->
+      @auth
       <ul class="navbar-nav ms-auto"> <!-- ms-auto: margin-start auto en Bootstrap 5 -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingUsername" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-            Nombre de Usuario
+          {{ Auth::user()->name }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingUsername">
-            <li><a class="dropdown-item" href="{{ route('home') }}">Cerrar Sesion</a></li>
+            <li><a class="dropdown-item" href="#" id="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
             <li><a class="dropdown-item" href="{{ route('pages.admin.perfil') }}">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Configuración</a></li>
           </ul>
         </li>
       </ul>
+      <!-- Formulario Oculto para Cerrar Sesión -->
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+      </form>
+      @endauth
     </div>
   </div>
 </nav>

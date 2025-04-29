@@ -28,6 +28,26 @@ class Admin extends Model
             'is_active' => 'boolean',
         ];
     }
+
+    protected $fillable = [
+        'name', 'email', 'password', 'role',
+    ];
+
+    // Si es necesario, puedes agregar un accesor para manejar los roles de manera más sencilla
+    public function isAdminLevelI()
+    {
+        return $this->role === 'Administrador Nv.1';
+    }
+
+    public function isAdminLevelII()
+    {
+        return $this->role === 'Administrador Nv.2';
+    }
+
+    public function isAdminLevelIII()
+    {
+        return $this->role === 'Admninistrador Nv.3';
+    }
 }
 
 ?>

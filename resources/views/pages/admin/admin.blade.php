@@ -20,7 +20,8 @@
     <!-- Contenido de la página -->
     <h1 class="h1" style="margin-left: 2.5%;">Lista de Administradores</h1><br>
     <div class="mx-auto" style="width: 95%;">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button><br><br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button>
+        <br><br>
         <!-- Tabla de usuarios -->   
         <table id="example" class="table table-striped" style="width:100%;">
             <thead>
@@ -101,7 +102,7 @@
                 <!-- Modal para editar los datos -->
                 <div class="modal fade" id="editarDatos{{ $admins -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form action="{{ route('pages.admin.update', $admins -> id) }}" method="POST">
+                        <form action="{{ route('pages.admin.admin.update', $admins -> id) }}" method="POST">
                             @csrf   <!-- Token de autenticidad -->
                             @method('PUT')  <!-- Uso del metodo para poder actulizar los datos -->
                             <div class="modal-content">
@@ -110,7 +111,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <label for="inputPassword5" class="form-label">Usuario</label>
+                                    <label fsor="inputPassword5" class="form-label">Usuario</label>
                                     <input name="username" class="form-control" value="{{ $admins -> username }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Nombre</label>
                                     <input name="name" class="form-control" value="{{ $admins -> name }}" type="text" placeholder="Default input" aria-label="default input example">
@@ -162,7 +163,7 @@
                 <div class="modal fade" id="eliminarDatos{{ $admins -> id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="{{ route('pages.admin.delete', $admins -> id) }}" method="POST">
+                            <form action="{{ route('pages.admin.admin.delete', $admins -> id) }}" method="POST">
                                 @csrf   <!-- Token de autenticidad -->
                                 @method('DELETE')  <!-- Uso del metodo para poder actulizar los datos -->
                                 <div class="modal-header">
@@ -191,7 +192,7 @@
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('pages.admin.create') }}" method="post">
+                <form action="{{ route('pages.admin.admin.create') }}" method="post">
                     @csrf   <!-- Token de autenticidad-->
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Datos</h1>

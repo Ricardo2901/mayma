@@ -20,7 +20,8 @@
     <!-- Contenido de la página -->
     <h1 class="h1" style="margin-left: 2.5%;">Todos los Usuarios</h1><br>
     <div class="mx-auto" style="width: 95%;">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button><br><br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button> | 
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="">Descargar Excel</button><br><br>
         <!-- Tabla de usuarios -->   
         <table id="example" class="table table-striped" style="width:100%;">
             <thead>
@@ -111,7 +112,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Esta funcion esta restringida. Por favor, ir al apartado para hacer alguna actualizacion de datos.</p>
+                                <p>Esta funcion esta restringida. Por favor, ir al apartado para hacer alguna actualizacion de datos. Tal vez esta función está para una próxima versión.</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
@@ -138,7 +139,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Esta funcion esta restringida. Por favor, ir al apartado para eliminar estos datos.</p>
+                                <p>Esta funcion esta restringida. Por favor, ir al apartado para eliminar estos datos. Tal vez esta función está para una próxima versión.</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
@@ -169,7 +170,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta funcion esta restringida. Por favor, ir al apartado para agregar un usuario.</p>
+                    <p>Esta funcion esta restringida. Por favor, ir al apartado para agregar un usuario. Tal vez esta función está para una próxima versión.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
