@@ -45,32 +45,30 @@
                     style="width: 185px;" alt="logo">
                   <h4 class="mt-1 mb-5 pb-1">Mayma Ambiental</h4>
                 </div>
-
-                <form action="{{ route('login') }}" method="post">
-                  @csrf
                   <p>Por favor, Inicia sesion con tu cuenta</p>
+                  <form method="POST" action="{{ route('authenticate') }}">
+                    @csrf
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input name="email" type="email" id="form2Example11" class="form-control" placeholder="Usuario" required/>
+                      <label class="form-label" for="form2Example11">Usuario</label>
+                    </div>
 
-                  <div data-mdb-input-init class="form-outline mb-4">
-                    <input name="email" type="email" id="form2Example11" class="form-control" placeholder="Usuario" required/>
-                    <label class="form-label" for="form2Example11">Usuario</label>
-                  </div>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input name="password" type="password" id="form2Example22" class="form-control" placeholder="Contraseña"  required/>
+                      <label class="form-label" for="form2Example22">Contraseña</label>
+                    </div>
 
-                  <div data-mdb-input-init class="form-outline mb-4">
-                    <input name="password" type="password" id="form2Example22" class="form-control" placeholder="Contraseña"  required/>
-                    <label class="form-label" for="form2Example22">Contraseña</label>
-                  </div>
-
-                  <div class="text-center pt-1 mb-5 pb-1">
-                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Inicia Sesion</button>
-                    <br>
-                    <a class="text-muted" href="#!">Olvide contraseña</a>
-                  </div>
-
+                    <div class="text-center pt-1 mb-5 pb-1">
+                      <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Inicia Sesion</button>
+                      <br>
+                      <a class="text-muted" href="#!">Olvide contraseña</a>
+                    </div>
+                  </form>
+                  @if($errors -> any())
                   <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">No tengo cuenta</p>
-                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger">Crear Usuario</button>
+                    <p class="mb-0 me-2"> {{ $errors -> first() }}</p>
                   </div>
-                </form>
+                  @endif
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">

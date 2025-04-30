@@ -14,18 +14,27 @@ use Illuminate\Support\Facades\Route;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MODELOS:
 use App\Models\User;
+use App\Models\Admin;       //Modelo de Administradores
 use App\Models\Post;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLOBAL:
-Route::get('/login', [HomeController::class, 'index']) -> name('login'); //Ruta para el login
-
-Route::post('/login', [LoginController::class, 'login']) ->name('login'); //Ruta para el login
-
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/home', function () {
+    return view('user');
+})->middleware('auth')->name('dashboard');
+
+/*Route::get('/login', [HomeController::class, 'index']) -> name('login'); //Ruta para el login
+
+Route::post('/authenticate', [LoginController::class, 'authenticate']) -> name('authenticate'); //Ruta para el login
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');*/
+
 // Rutas protegidas por autenticación
-Route::middleware('auth')->group(function () {
+/*Route::middleware('auth')->group(function () {
     Route::get('/admin/administradores', function () {
         return view('admin.dashboard');
     })->name('pages.admin.admin');
@@ -37,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/administradores', function () {
         return view('viewer.dashboard');
     })->name('pages.admin.viewer');
-});
+});*/
 
 Route::get('/prueba', function () {
     return view('user');

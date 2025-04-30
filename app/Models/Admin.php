@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
+    use Notifiable;
     use HasFactory;
-
-    //protected $table = 'posts';
+    /*
+    protected $table = 'users';
 
     protected function title(): Attribute {
         return Attribute::make(
@@ -24,30 +25,12 @@ class Admin extends Model
 
     protected function casts(): array {
         return [
-            'published_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
             'is_active' => 'boolean',
         ];
     }
-
-    protected $fillable = [
-        'name', 'email', 'password', 'role',
-    ];
-
-    // Si es necesario, puedes agregar un accesor para manejar los roles de manera más sencilla
-    public function isAdminLevelI()
-    {
-        return $this->role === 'Administrador Nv.1';
-    }
-
-    public function isAdminLevelII()
-    {
-        return $this->role === 'Administrador Nv.2';
-    }
-
-    public function isAdminLevelIII()
-    {
-        return $this->role === 'Admninistrador Nv.3';
-    }
+    */
 }
 
 ?>

@@ -31,9 +31,11 @@
       @auth
       <ul class="navbar-nav ms-auto"> <!-- ms-auto: margin-start auto en Bootstrap 5 -->
         <li class="nav-item dropdown">
+          @if(Auth::check())
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingUsername" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-          {{ Auth::user()->name }}
+          {{ Auth::user() -> name }}
           </a>
+          @endif
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingUsername">
             <li><a class="dropdown-item" href="#" id="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
             <li><a class="dropdown-item" href="{{ route('pages.admin.perfil') }}">Ver Perfil</a></li>

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
     use HasFactory;
-
-    //protected $table = 'posts';
+    /*
+    protected $table = 'users';
 
     protected function title(): Attribute {
         return Attribute::make(
@@ -29,6 +30,7 @@ class User extends Model
             'is_active' => 'boolean',
         ];
     }
+    */
 }
 
 ?>
