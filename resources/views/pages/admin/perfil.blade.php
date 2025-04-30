@@ -53,22 +53,28 @@
             <!-- Este es el interior del componente de cambio de tema -->
         </x-colortheme>
     </div>
+    @auth
     <br>
     <br>
     <br>
     <h1 class="h1">Acerca del Usuario</h1>
+    @if(Auth::check())
     <ul class="centrar">
-        <li><span class="label">Nombre:</span> Gestor de Archivos</li>
-        <li><span class="label">Nombre de Usuario:</span> v1.0.0</li>
-        <li><span class="label">Contraseña:</span> Aplicación para gestionar archivos.</li>
-        <li><span class="label">Fecha de creacion:</span> Ricardo Blanco</li>
-        <li><span class="label">Fecha de actualizacion:</span> MIT</li>
-        <li><span class="label">Estatus:</span> Laravel, MySQL, Bootstrap</li>
+        <li><img src="{{ asset(Auth::user() -> avatar) }}" alt="Avatar" class="rounded-circle" width="310" height="310"> <!-- Avatar del usuario --></li>
+        <br>
+        <li><span class="label">Correo:</span> {{ Auth::user() -> email }}</li>
+        <li><span class="label">Nombre:</span> {{ Auth::user() -> name }}</li>
+        <li><span class="label">Nombre de Usuario:</span> {{ Auth::user() -> username}}</li>
+        <li><span class="label">Fecha de creacion:</span> {{ \Carbon\Carbon::parse(Auth::user() -> created_at) -> format('d / m / Y') }} a las {{ \Carbon\Carbon::parse(Auth::user() -> created_at) -> format('H:i') }} hrs.</li>
+        <li><span class="label">Fecha de actualizacion:</span> {{ \Carbon\Carbon::parse(Auth::user() -> updated_at) -> format('d / m / Y') }} a las {{ \Carbon\Carbon::parse(Auth::user() -> updated_at) -> format('H:i') }} hrs.</li>
+        <li><span class="label">Rol:</span> {{ Auth::user() -> rol}}</li>
+        <li><span class="label">Estado:</span> {{ Auth::user() -> is_active == 1 ? 'En Linea' : 'Inactivo'}}</li>       
         <br>
         <br>
         <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarPerfil">Editar Perfil</button> | 
         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPerfil">Eliminar Perfil</button>
     </ul>
+    @endif
 
     <!-- Modal para actualizar los datos -->
     <div class="modal fade" id="editarPerfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -112,6 +118,7 @@
             </form>
         </div>
     </div>
+    @endauth
     <br><br>
     <x-basicFooter></x-basicFooter>
     <x-script></x-script>

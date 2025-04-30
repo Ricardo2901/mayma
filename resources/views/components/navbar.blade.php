@@ -30,8 +30,11 @@
       <!-- Aquí agregamos un contenedor para empujar el dropdown a la derecha -->
       @auth
       <ul class="navbar-nav ms-auto"> <!-- ms-auto: margin-start auto en Bootstrap 5 -->
+        <li class="nav-item">
+          <img src="{{ asset(Auth::user() -> avatar) }}" alt="Avatar" class="rounded-circle" width="38" height="38">
         <li class="nav-item dropdown">
           @if(Auth::check())
+          
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingUsername" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
           {{ Auth::user() -> name }}
           </a>

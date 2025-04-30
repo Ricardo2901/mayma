@@ -23,9 +23,9 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/home', function () {
-    return view('user');
-})->middleware('auth')->name('dashboard');
+Route::get('/admin/administradores', function () {
+    return view('pages.admin.admin'); // o tu vista correspondiente
+})->middleware('auth');
 
 /*Route::get('/login', [HomeController::class, 'index']) -> name('login'); //Ruta para el login
 
