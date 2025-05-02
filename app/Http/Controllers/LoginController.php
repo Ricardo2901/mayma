@@ -25,6 +25,7 @@ class LoginController extends Controller
 
             $admin = Auth::user();
             
+            $admin -> timestamps = false; // Desactiva los timestamps para evitar conflictos
             $admin -> is_active = 1; // Marca al administrador como activo
             $admin -> save(); // Guarda los cambios
 

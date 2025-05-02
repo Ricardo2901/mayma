@@ -45,6 +45,7 @@
     
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    @if(Auth::check())
     <div>
         <x-navbar>
             <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
@@ -122,5 +123,8 @@
     <br><br>
     <x-basicFooter></x-basicFooter>
     <x-script></x-script>
+    @else
+    <x-notFound></x-notFound>
+    @endif
 </body>
 </html>

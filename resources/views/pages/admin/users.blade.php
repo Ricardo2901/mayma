@@ -13,6 +13,7 @@
     <title>Lista de Usuarios</title>
 </head>
 <body>
+    @if(Auth::check())
     <x-navbar></x-navbar>
     <br>
     <br>
@@ -223,5 +224,8 @@
         });
     });
     </script>
+    @else
+    <x-notFound></x-notFound>
+    @endif
 </body>
 </html>
