@@ -1,4 +1,4 @@
-
+@if(Auth::check())
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +16,6 @@
     <title>Lista de Administradores</title>
 </head>
 <body>
-    @if(Auth::check())
     <x-navbar></x-navbar>
     <br>
     <br>
@@ -262,8 +261,9 @@
         });
     });
     </script>
-    @else
-        <x-notFound></x-notFound>
-    @endif
+    
 </body>
+@else
+    @include('errors.401')
+@endif
 </html>

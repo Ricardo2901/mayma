@@ -225,7 +225,7 @@
     });
     </script>
     @else
-    <x-notFound></x-notFound>
+        @include('errors.401') <!-- Si no hay sesion activa, se redirige a la pagina de error 401 -->
     @endif
 </body>
 </html>

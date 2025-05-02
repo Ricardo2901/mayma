@@ -124,7 +124,7 @@
     <x-basicFooter></x-basicFooter>
     <x-script></x-script>
     @else
-    <x-notFound></x-notFound>
+        @include('errors.401') <!-- Si el usuario no está autenticado, muestra la página de error 401 -->
     @endif
 </body>
 </html>
