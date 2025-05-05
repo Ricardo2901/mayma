@@ -23,6 +23,7 @@
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Archivo</button><br><br>
         <!-- Tabla de usuarios -->   
         <table id="example" class="table table-striped" style="width:100%;">
+            
             <thead>
                 <tr>
                     <th>Nombre del Archivo</th>
@@ -34,19 +35,46 @@
                 </tr>
             </thead>
             <tbody>
+            @foreach ($file as $files)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ pathinfo($files -> name, PATHINFO_FILENAME) }}</td>
+                    <td>{{ $files -> format }}</td>
+                    <td>{{ \Carbon\Carbon::parse($files -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> created_at) -> format('H:i') }} hrs.</td>
+                    <td>{{ \Carbon\Carbon::parse($files -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> updated_at) -> format('H:i') }} hrs.</td>
+                    <td>{{ $files -> nombre }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
+                        @if ($files -> format == 'pdf')
+                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $files -> name}}{{ $files -> id}}">Editar</button> | 
+                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> name}}{{ $files -> id}}">Eliminar</button> | 
+                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
+                        @else
                         <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Editar</button> | 
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
+                        @endif
                     </center></td>
                 </tr>
+
+                <!-- Modal para ver los datos -->
+                <div class="modal fade" id="verDatospdf{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Esta es la visualizacion de un archivo en formato PDF.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Descargar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
             </tbody>
             <!-- Modal para editar los datos -->
             <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -68,14 +96,14 @@
             </div>
             <!-- Modal para ver los datos -->
             <div class="modal fade" id="verDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            En desarrollo...
+                            Este archivo no se puede visualizar desde el sistema, por favor descargalo para poder verlo.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
@@ -88,7 +116,7 @@
     </div>
     <!-- Modal para eliminar los datos -->
     <div class="modal fade" id="eliminarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
@@ -113,13 +141,22 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Archivo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>En desarrollo...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Agregar</button>
-                </div>
+                <form action="{{ route('pages.admin.files') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Button</button>
+                            <input name="file" type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" multple required>
+                        </div>
+                        <div>
+                            <p>Tamaño permitido: 130 MB</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@
         </li>
       </ul>
       <!-- Aquí agregamos un contenedor para empujar el dropdown a la derecha -->
-      @auth
+      <!-- @auth es una directiva de Blade que verifica si el usuario está autenticado -->
       <ul class="navbar-nav ms-auto"> <!-- ms-auto: margin-start auto en Bootstrap 5 -->
         <li class="nav-item">
           <img src="{{ asset(Auth::user() -> avatar) }}" alt="Avatar" class="rounded-circle" width="38" height="38">
@@ -51,7 +51,7 @@
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
           @csrf
       </form>
-      @endauth
+      <!-- @endauth -->
     </div>
   </div>
 </nav>

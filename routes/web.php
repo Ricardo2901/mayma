@@ -116,6 +116,8 @@ Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pa
 
 Route::get('/admin/archivo', [FileController::class, 'index']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
 
+Route::post('/admin/archivo', [FileController::class, 'uploadFile']) -> name('pages.admin.files.created');   //Crea un nuevo archivo
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //USUARIOS:
 ?>

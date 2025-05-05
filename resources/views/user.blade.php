@@ -6,12 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-    @if(Auth::check()) <!-- Verifica si hay un usuario autenticado -->
-    <p>Bienvenido, {{ Auth::user()->name }}!</p>
-    @else
-        <p>No has iniciado sesión.</p>
-    @endif
-    </div>
+    <form action="{{ route('pages.admin.files.created') }}" enctype="multipart/form-data" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="nombreArchivo">Archivo</label>
+            <input type="file" class="form-control" id="nombreArchivo" name="file" placeholder="Nombre del Archivo">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
 </body>
 </html>
