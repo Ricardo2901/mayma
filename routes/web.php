@@ -52,9 +52,6 @@ Route::get('/prueba', function () {
     return view('user');
 });
 
-Route::get('/admin/version', function () {
-    return view('pages.admin.acerca');
-});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,6 +87,7 @@ Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ADMINISTRADOR:
 Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
@@ -118,6 +116,18 @@ Route::get('/admin/archivo', [FileController::class, 'index']) -> name('pages.ad
 
 Route::post('/admin/archivo', [FileController::class, 'uploadFile']) -> name('pages.admin.files.created');   //Crea un nuevo archivo
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //USUARIOS:
+Route::get('/user/home', [HomeController::class, 'index']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
+
+Route::get('/user/archivo', [FileController::class, 'index']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
+
+Route::post('/user/archivo', [FileController::class, 'uploadFile']) -> name('pages.users.files.created');   //Crea un nuevo archivo
+
+Route::get('/user/perfil', [UserController::class, 'showProfile']) -> name('pages.users.perfil');     //Muestra el perfil del usuario
+
+Route::get('/user/acerca', [UserController::class, 'showVersion']) -> name('pages.users.version');     //Muestra la configuracion del usuario
+
+
 ?>

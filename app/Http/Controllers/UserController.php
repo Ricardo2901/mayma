@@ -68,4 +68,13 @@ class UserController extends Controller
 
         return redirect() -> route('pages.admin.users');
     }
+
+    public function showProfile() {
+        return view('pages.user.perfil');
+    }
+
+    public function showVersion() {
+        return view('pages.user.acerca');
+    }
+
 }

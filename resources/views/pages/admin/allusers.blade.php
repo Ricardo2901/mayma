@@ -13,7 +13,17 @@
     <title>Todos los Usuarios</title>
 </head>
 <body>
-    <x-navbar></x-navbar>
+    @php
+        $login = null;
+
+        if (Auth::guard('admin')->check()) {
+            $login = Auth::guard('admin')->user();
+        } elseif (Auth::guard('web')->check()) {
+            $login = Auth::guard('web')->user();
+        }
+    @endphp
+
+    <x-navbar :login="$login" />
     <br>
     <br>
     <br>

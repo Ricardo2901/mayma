@@ -12,6 +12,14 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'is_active',
+        'avatar',
+    ];
     /*
     protected $table = 'users';
 

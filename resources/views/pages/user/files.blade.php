@@ -14,16 +14,16 @@
 </head>
 <body>
     @php
-        $login = null;
+        $user = null;
 
         if (Auth::guard('admin')->check()) {
-            $login = Auth::guard('admin')->user();
+            $user = Auth::guard('admin')->user();
         } elseif (Auth::guard('web')->check()) {
-            $login = Auth::guard('web')->user();
+            $user = Auth::guard('web')->user();
         }
     @endphp
 
-    <x-navbar :login="$login" />
+    <x-navbar :user="$user" />
     <br>
     <br>
     <br>
@@ -45,24 +45,18 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($file as $files)
+            
                 <tr>
-                    <td>{{ pathinfo($files -> name, PATHINFO_FILENAME) }}</td>
-                    <td>{{ uppercase($files -> format) }}</td>
-                    <td>{{ \Carbon\Carbon::parse($files -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> created_at) -> format('H:i') }} hrs.</td>
-                    <td>{{ \Carbon\Carbon::parse($files -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> updated_at) -> format('H:i') }} hrs.</td>
-                    <td>{{ $files -> nameuser }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        @if ($files -> format == 'pdf')
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $files -> name}}{{ $files -> id}}">Descargar</button> | 
+                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $files -> name}}{{ $files -> id}}">Editar</button> | 
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> name}}{{ $files -> id}}">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
-                        @else
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Descargar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
-                        @endif
                     </center></td>
                 </tr>
 
@@ -84,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            
             </tbody>
             <!-- Modal para editar los datos -->
             <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

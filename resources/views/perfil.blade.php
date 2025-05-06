@@ -73,6 +73,24 @@
         <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarPerfil">Editar Perfil</button> | 
         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPerfil">Eliminar Perfil</button>
     </ul>
+
+    @elseif (Auth::guard('admin')->check())
+    <ul class="centrar">
+        <li><img src="{{ asset(Auth::guard('admin') -> user() -> avatar) }}" alt="Avatar" class="rounded-circle" width="310" height="310"> <!-- Avatar del usuario --></li>
+        <br>
+        <li><span class="label">Correo:</span> {{ Auth::guard('admin') -> user() -> email }}</li>
+        <li><span class="label">Nombre:</span> {{ Auth::guard('admin') -> user() -> name }}</li>
+        <li><span class="label">Nombre de Usuario:</span> {{ Auth::guard('admin') -> user() -> username }}</li>
+        <li><span class="label">Fecha de creacion:</span> {{ \Carbon\Carbon::parse(Auth::guard('admin') -> user() -> created_at) -> format('d / m / Y') }} a las {{ \Carbon\Carbon::parse(Auth::guard('admin') -> user() -> created_at) -> format('H:i') }} hrs.</li>
+        <li><span class="label">Fecha de actualizacion:</span> {{ \Carbon\Carbon::parse(Auth::guard('admin') -> user() -> updated_at) -> format('d / m / Y') }} a las {{ \Carbon\Carbon::parse(Auth::guard('admin') -> user() -> updated_at) -> format('H:i') }} hrs.</li>
+        <li><span class="label">Rol:</span> {{ Auth::guard('admin') -> user() -> rol }}</li>
+        <li><span class="label">Estado:</span> {{ Auth::guard('admin') -> user() -> is_active == 1 ? 'En Linea' : 'Inactivo'}}</li>       
+        <br>
+        <br>
+        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarPerfil">Editar Perfil</button> | 
+        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPerfil">Eliminar Perfil</button>
+    </ul>
+
     @endif
 
     <!-- Modal para actualizar los datos -->

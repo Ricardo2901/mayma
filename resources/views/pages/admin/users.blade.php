@@ -13,8 +13,17 @@
     <title>Lista de Usuarios</title>
 </head>
 <body>
-    @if(Auth::check())
-    <x-navbar></x-navbar>
+    @php
+        $login = null;
+
+        if (Auth::guard('admin')->check()) {
+            $login = Auth::guard('admin')->user();
+        } elseif (Auth::guard('web')->check()) {
+            $login = Auth::guard('web')->user();
+        }
+    @endphp
+
+    <x-navbar :login="$login" />
     <br>
     <br>
     <br>
@@ -127,7 +136,7 @@
                                 @if($users -> last_login == null) <!-- Si el usuario no ha accedido -->
                                     <input class="form-control" value="No ha accedido" type="text" placeholder="Default input" aria-label="default input example" disabled>
                                 @else <!-- Si el usuario ha accedido -->
-                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($allUsers -> last_login) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
+                                    <input class="form-control" value="{{ \Carbon\Carbon::parse($users -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($users -> last_login) -> format('H:i') }} hrs." type="text" placeholder="Default input" aria-label="default input example" disabled>
                                 @endif
                                 <label for="inputPassword5" class="form-label">En Linea...</label>
                                 <input class="form-control" value="{{ $users -> is_active == 1 ? 'Activo' : 'Inactivo' }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
@@ -224,8 +233,5 @@
         });
     });
     </script>
-    @else
-        @include('errors.401') <!-- Si no hay sesion activa, se redirige a la pagina de error 401 -->
-    @endif
 </body>
 </html>

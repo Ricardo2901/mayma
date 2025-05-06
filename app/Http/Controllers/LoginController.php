@@ -13,28 +13,44 @@ class LoginController extends Controller
         return view('login'); // Asegúrate de tener resources/views/login.blade.php
     }
 
-    public function authenticate(Request $request): RedirectResponse
-    {
+    public function authenticate(Request $request): RedirectResponse {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-        if (Auth::guard('web') -> attempt($credentials)) {
+    
+        // Intentar login con el guard 'web' (usuarios normales)
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-
-            $admin = Auth::user();
-            
-            $admin -> timestamps = false; // Desactiva los timestamps para evitar conflictos
-            $admin -> is_active = 1; // Marca al administrador como activo
-            $admin -> save(); // Guarda los cambios
-
-            return redirect()->route('pages.admin.admin')->with('user', Auth::user());
+    
+            $user = Auth::guard('web')->user();
+    
+            $user->timestamps = false;  // Desactiva los timestamps para evitar conflictos
+            $user->is_active = 1;       // Marca al usuario como activo
+            $user->save();              // Guarda los cambios
+    
+            // Redirige al perfil del usuario
+            return redirect()->route('pages.users.perfil')->with('login', $user);
+    
+        // Intentar login con el guard 'admin' (administradores)
+        } elseif (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+    
+            $admin = Auth::guard('admin')->user();
+    
+            $admin->timestamps = false;  // Desactiva los timestamps para evitar conflictos
+            $admin->is_active = 1;       // Marca al administrador como activo
+            $admin->save();              // Guarda los cambios
+    
+            // Redirige al perfil del administrador
+            return redirect()->route('pages.admin.perfil')->with('login', $admin);
+    
+        } else {
+            // En caso de fallar la autenticación
+            return back()->withErrors([
+                'email' => 'Usuario y/o contraseña incorrectos.',
+            ])->onlyInput('email');
         }
-
-        return back()->withErrors([
-            'email' => 'Usuario y/o contraseña incorrectos.',
-        ])->onlyInput('email');
     }
 
     protected function unauthenticated($request, AuthenticationException $exception) {
@@ -43,20 +59,30 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        $admin = Auth::user();
-
-        if ($admin) {
-            $admin -> timestamps = false; // Desactiva los timestamps para evitar conflictos
-            $admin -> is_active = 0; // Marca al administrador como inactivo
-            $admin -> last_login = now(); // Marca la fecha de último inicio de sesión
-            $admin -> save(); // Guarda los cambios
+        if (Auth::guard('admin')->check()) {
+            $admin = Auth::guard('admin')->user();
+    
+            $admin->timestamps = false;
+            $admin->is_active = 0;
+            $admin->last_login = now();
+            $admin->save();
+    
+            Auth::guard('admin')->logout();
+    
+        } elseif (Auth::guard('web')->check()) {
+            $user = Auth::guard('web')->user();
+    
+            $user->timestamps = false;
+            $user->is_active = 0;
+            $user->last_login = now();
+            $user->save();
+    
+            Auth::guard('web')->logout();
         }
-
-        // Cierra la sesión del usuario
-        Auth::logout();
+    
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+    
         return redirect('/login');
     }
 }
