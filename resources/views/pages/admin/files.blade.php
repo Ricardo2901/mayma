@@ -48,18 +48,16 @@
             @foreach ($file as $files)
                 <tr>
                     <td>{{ pathinfo($files -> name, PATHINFO_FILENAME) }}</td>
-                    <td>{{ uppercase($files -> format) }}</td>
+                    <td>{{ ($files -> format) }}</td>
                     <td>{{ \Carbon\Carbon::parse($files -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> created_at) -> format('H:i') }} hrs.</td>
                     <td>{{ \Carbon\Carbon::parse($files -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> updated_at) -> format('H:i') }} hrs.</td>
                     <td>{{ $files -> nameuser }}</td>
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
                         @if ($files -> format == 'pdf')
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $files -> name}}{{ $files -> id}}">Descargar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> name}}{{ $files -> id}}">Eliminar</button> | 
+                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatospdf{{ $files -> id}}">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
                         @else
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos">Descargar</button> | 
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
                         @endif
@@ -75,13 +73,37 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Esta es la visualizacion de un archivo en formato PDF.
+                                <iframe src="{{ asset('pdfjs/web/viewer.html') }}?file=/{{ $files -> path }}" width="100%" height="700px"></iframe>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Descargar</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Modal para eliminar los datos -->
+                <div class="modal fade" id="eliminarDatospdf{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <form action="{{ route('pages.admin.files.delete', $files -> id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Estas seguro de eliminar este archivo?
+                                    Esta acción no se puede deshacer.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </div>
+                        </form> 
                     </div>
                 </div>
             @endforeach
@@ -124,25 +146,7 @@
             </div>
         </table>
     </div>
-    <!-- Modal para eliminar los datos -->
-    <div class="modal fade" id="eliminarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estas seguro de eliminar este archivo?
-                    Esta acción no se puede deshacer.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <!-- Modal para agregar datos -->
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">

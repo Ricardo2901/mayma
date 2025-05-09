@@ -1,4 +1,4 @@
-@if(Auth::check())
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -271,6 +271,6 @@
         });
     });
     </script>
-    
+
 </body>
 </html>

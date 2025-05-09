@@ -46,9 +46,17 @@
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div>
-        <x-navbar :user="Auth::user()">
-            <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
-        </x-navbar>
+        @php
+            $login = null;
+
+            if (Auth::guard('admin')->check()) {
+                $login = Auth::guard('admin')->user();
+            } elseif (Auth::guard('web')->check()) {
+                $login = Auth::guard('web')->user();
+            }
+        @endphp
+
+        <x-navbar :login="$login" />
         <x-colortheme>
             <!-- Este es el interior del componente de cambio de tema -->
         </x-colortheme>

@@ -112,16 +112,18 @@ Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pa
 
 Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pages.admin.allusers');  //Muestra el perfil de los usuarios/admnistradores
 
-Route::get('/admin/archivo', [FileController::class, 'index']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
+Route::get('/admin/archivo', [FileController::class, 'indexAdmin']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
 
 Route::post('/admin/archivo', [FileController::class, 'uploadFile']) -> name('pages.admin.files.created');   //Crea un nuevo archivo
+
+Route::delete('/admin/archivo/{id}', [FileController::class, 'deleteFile']) -> name('pages.admin.files.delete');   //Elimina un archivo
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //USUARIOS:
 Route::get('/user/home', [HomeController::class, 'index']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
 
-Route::get('/user/archivo', [FileController::class, 'index']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
+Route::get('/user/archivo', [FileController::class, 'indexUsers']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
 
 Route::post('/user/archivo', [FileController::class, 'uploadFile']) -> name('pages.users.files.created');   //Crea un nuevo archivo
 

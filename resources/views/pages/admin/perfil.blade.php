@@ -47,16 +47,16 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div>
         @php
-            $user = null;
+            $login = null;
 
             if (Auth::guard('admin')->check()) {
-                $user = Auth::guard('admin')->user();
+                $login = Auth::guard('admin')->user();
             } elseif (Auth::guard('web')->check()) {
-                $user = Auth::guard('web')->user();
+                $login = Auth::guard('web')->user();
             }
         @endphp
 
-        <x-navbar :user="$user" />
+        <x-navbar :login="$login" />
         <!-- Offcanvas de la configuración -->
         <x-offcanvas></x-offcanvas>
         <x-colortheme>
@@ -131,7 +131,7 @@
     <x-basicFooter></x-basicFooter>
     <x-script></x-script>
 </body>
-
 </html>
+
 
 

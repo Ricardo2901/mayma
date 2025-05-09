@@ -10,10 +10,16 @@ use App\Models\File; // Modelo de Archivos
 
 class FileController extends Controller
 {
-    public function index() {
+    public function indexAdmin() {
         $file = File::all(); // Obtiene todos los archivos
 
         return view('pages.admin.files', compact('file'));
+    }
+
+    public function indexUsers() {
+        $file = File::all(); // Obtiene todos los archivos
+
+        return view('pages.user.files', compact('file'));
     }
 
     public function uploadFile(Request $request) {
@@ -53,6 +59,28 @@ class FileController extends Controller
             // Retornar los datos del archivo o redirigir a la página correspondiente
             return redirect()->route('pages.admin.files');
         }
+    }
+
+    public function deleteFile($id) {
+        $archivo = File::findOrFail($id);
+        $rutaArchivo = str_replace('storage/', '', $archivo->path); // Eliminar 'storage/' para obtener la ruta correcta
+
+        if (Storage::disk('public')->exists($rutaArchivo)) {
+            Storage::disk('public')->delete($rutaArchivo); // Elimina el archivo del almacenamiento
+        }
+
+        $archivo->delete(); // Elimina el registro de la base de datos
+
+        return redirect()->route('pages.admin.files');
+    }
+
+    public function showPDF($id) {
+        $archivo = File::findOrFail($id);
+
+        $cleanPath = str_replace('/storage', '', $archivo->path);
+        $pdfUrl = asset('storage/' . $cleanPath);
+
+        return view('pages.admin.viewer', compact('pdfUrl'));
     }
     
 }
