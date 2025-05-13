@@ -20,12 +20,12 @@ use App\Models\Post;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLOBAL:
 Route::get('/login', [LoginController::class, 'index'])->name('login');
+
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/admin/administradores', function () {
-    return view('pages.admin.admin'); // o tu vista correspondiente
-})->middleware('auth');
+
 
 /*Route::get('/login', [HomeController::class, 'index']) -> name('login'); //Ruta para el login
 
@@ -90,46 +90,54 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ADMINISTRADOR:
-Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
+Route::middleware(['auth:admin']) -> group(function  () {
 
-Route::post('/admin/administradores', [AdminController::class, 'created']) -> name('pages.admin.admin.create');   //Crea un nuevo admnistrador
+    Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
 
-Route::put('/admin/administradores/{admin}', [AdminController::class, 'update']) -> name('pages.admin.admin.update');   //Actualiza los datos de los admnistradores
+    Route::post('/admin/administradores', [AdminController::class, 'created']) -> name('pages.admin.admin.create');   //Crea un nuevo admnistrador
 
-Route::delete('/admin/administradores/{admin}', [AdminController::class, 'delete']) -> name('pages.admin.admin.delete');   //Muestra el formulario para eliminar un admnistrador
+    Route::put('/admin/administradores/{admin}', [AdminController::class, 'update']) -> name('pages.admin.admin.update');   //Actualiza los datos de los admnistradores
 
-Route::get('/admin/usuarios', [UserController::class, 'index']) -> name('pages.admin.users');           //Muestra los datos de los usuarios
+    Route::delete('/admin/administradores/{admin}', [AdminController::class, 'delete']) -> name('pages.admin.admin.delete');   //Muestra el formulario para eliminar un admnistrador
 
-Route::post('/admin/usuarios', [UserController::class, 'created']) -> name('pages.admin.users.create');   //Crea un nuevo usuario
+    Route::get('/admin/usuarios', [UserController::class, 'index']) -> name('pages.admin.users');           //Muestra los datos de los usuarios
 
-Route::put('/admin/usuarios/{user}', [UserController::class, 'update']) -> name('pages.admin.users.update');   //Actualiza los datos de los usuarios
+    Route::post('/admin/usuarios', [UserController::class, 'created']) -> name('pages.admin.users.create');   //Crea un nuevo usuario
 
-Route::delete('/admin/usuarios/{user}', [UserController::class, 'delete']) -> name('pages.admin.users.delete');   //Muestra el formulario para eliminar un usuario
+    Route::put('/admin/usuarios/{user}', [UserController::class, 'update']) -> name('pages.admin.users.update');   //Actualiza los datos de los usuarios
 
-Route::get('/admin/configuracion', [AdminController::class, 'config']) -> name('pages.admin.settings');     //Muestra la configuracion del administrador
+    Route::delete('/admin/usuarios/{user}', [UserController::class, 'delete']) -> name('pages.admin.users.delete');   //Muestra el formulario para eliminar un usuario
 
-Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pages.admin.perfil');     //Muestra el perfil del administrador
+    Route::get('/admin/configuracion', [AdminController::class, 'config']) -> name('pages.admin.settings');     //Muestra la configuracion del administrador
 
-Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pages.admin.allusers');  //Muestra el perfil de los usuarios/admnistradores
+    Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pages.admin.perfil');     //Muestra el perfil del administrador
 
-Route::get('/admin/archivo', [FileController::class, 'indexAdmin']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
+    Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pages.admin.allusers');  //Muestra el perfil de los usuarios/admnistradores
 
-Route::post('/admin/archivo', [FileController::class, 'uploadFile']) -> name('pages.admin.files.created');   //Crea un nuevo archivo
+    Route::get('/admin/archivo', [FileController::class, 'indexAdmin']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
 
-Route::delete('/admin/archivo/{id}', [FileController::class, 'deleteFile']) -> name('pages.admin.files.delete');   //Elimina un archivo
+    Route::post('/admin/archivo', [FileController::class, 'uploadFile']) -> name('pages.admin.files.created');   //Crea un nuevo archivo
 
+    Route::delete('/admin/archivo/{id}', [FileController::class, 'deleteFile']) -> name('pages.admin.files.delete');   //Elimina un archivo
+
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //USUARIOS:
-Route::get('/user/home', [HomeController::class, 'index']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
+Route::middleware(['auth:web']) -> group(function () {
 
-Route::get('/user/archivo', [FileController::class, 'indexUsers']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
+    Route::get('/user/home', [HomeController::class, 'index']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
 
-Route::post('/user/archivo', [FileController::class, 'uploadFile']) -> name('pages.users.files.created');   //Crea un nuevo archivo
+    Route::get('/user/archivo', [FileController::class, 'indexUsers']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
 
-Route::get('/user/perfil', [UserController::class, 'showProfile']) -> name('pages.users.perfil');     //Muestra el perfil del usuario
+    Route::post('/user/archivo', [FileController::class, 'uploadFile']) -> name('pages.users.files.created');   //Crea un nuevo archivo
 
-Route::get('/user/acerca', [UserController::class, 'showVersion']) -> name('pages.users.version');     //Muestra la configuracion del usuario
+    Route::get('/user/perfil', [UserController::class, 'showProfile']) -> name('pages.users.perfil');     //Muestra el perfil del usuario
 
+    Route::get('/user/acerca', [UserController::class, 'showVersion']) -> name('pages.users.version');     //Muestra la configuracion del usuario
+
+    
+
+});
 
 ?>

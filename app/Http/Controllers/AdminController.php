@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Admin; // Modelo de Administradores
 use Illuminate\Support\Facades\Hash; // Clase para encriptar la contraseña
@@ -37,6 +38,8 @@ class AdminController extends Controller
         $admin -> last_login = null; // Marca al administrador como no verificado
 
         $admin -> save();
+
+        Storage::disk('public')->makeDirectory('admin/' . $admin->username);
 
         return redirect() -> route('pages.admin.admin');
     }

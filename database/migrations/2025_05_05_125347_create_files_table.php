@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('size');       // Tamaño del archivo en MB
             $table->string('username') -> nullable(); // ID del usuario (opcional)
             $table->string('nameuser'); // Nombre del usuario (opcional)
+            $table->string('type_user') -> nullable(); //Tipo de usuario
             $table->string('user_email') -> nullable(); // ID del usuario (opcional)
             $table->timestamps();
         });

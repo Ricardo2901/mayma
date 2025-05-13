@@ -48,7 +48,7 @@
             @foreach ($file as $files)
                 <tr>
                     <td>{{ pathinfo($files -> name, PATHINFO_FILENAME) }}</td>
-                    <td>{{ ($files -> format) }}</td>
+                    <td>{{ strtoupper($files -> format) }}</td>
                     <td>{{ \Carbon\Carbon::parse($files -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> created_at) -> format('H:i') }} hrs.</td>
                     <td>{{ \Carbon\Carbon::parse($files -> updated_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($files -> updated_at) -> format('H:i') }} hrs.</td>
                     <td>{{ $files -> nameuser }}</td>
@@ -58,8 +58,8 @@
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatospdf{{ $files -> id}}">Eliminar</button> | 
                         <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
                         @else
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos">Ver</button>
+                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatospdf{{ $files -> id}}">Eliminar</button> | 
+                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $files -> id }}">Ver</button>
                         @endif
                     </center></td>
                 </tr>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Descargar</button>
+                                <a href="{{ asset($files -> path) }}" class="btn btn-primary" download="{{ basename($files -> name) }}">Descargar {{ strtoupper($files -> format) }}</a>
                             </div>
                         </div>
                     </div>
@@ -100,50 +100,33 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </div>
                             </div>
                         </form> 
                     </div>
                 </div>
+
+                <!-- Modal para ver los datos en caso de que no sea PDF -->
+                <div class="modal fade" id="verDatos{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Este archivo no se puede visualizar desde el sistema, por favor descargalo para poder verlo.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                <a href="{{ asset($files -> path) }}" class="btn btn-primary" download="{{ basename($files -> name) }}">Descargar {{ strtoupper($files -> format) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
             </tbody>
-            <!-- Modal para editar los datos -->
-            <div class="modal fade" id="editarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            En desarrollo...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para ver los datos -->
-            <div class="modal fade" id="verDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Este archivo no se puede visualizar desde el sistema, por favor descargalo para poder verlo.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Descargar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </table>
     </div>
     
@@ -205,6 +188,16 @@
             }
         });
     });
+    </script>
+
+    <script>
+        function descargarPDF() {
+            const pdfUrl = PDFViewerApplication.url; // Esto debe contener la URL del PDF cargado
+            const a = document.createElement('a');
+            a.href = pdfUrl;
+            a.download = 'documento.pdf';
+            a.click();
+        }
     </script>
 </body>
 </html>

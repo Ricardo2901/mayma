@@ -10,7 +10,15 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('login'); // Asegúrate de tener resources/views/login.blade.php
+        if (Auth::guard('admin')->check()) {
+        return redirect()->route('pages.admin.perfil');
+        }
+
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('pages.users.perfil');
+        }
+
+        return view('login'); // Mostrar login solo si no hay sesión activa
     }
 
     public function authenticate(Request $request): RedirectResponse {
