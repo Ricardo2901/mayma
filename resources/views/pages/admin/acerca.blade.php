@@ -62,6 +62,7 @@
     <br>
     <br>
     <h1>Acerca de la Aplicación</h1>
+    @if (Auth::guard('admin') -> check())
     <ul class="centrar">
         <li><span class="label">📛 Nombre:</span> Gestor de Archivos</li>
         <li><span class="label">📦 Versión:</span> v1.0.0</li>
@@ -71,8 +72,9 @@
         <li><span class="label">🛠 Tecnologías:</span> Laravel, MySQL, Bootstrap</li>
         <li><span class="label">🔐 Seguridad:</span> Autenticación con Laravel Breeze, protección CSRF y validación de formularios.</li>
         <li><span class="label">📚 Documentación:</span> <a class="a" href="/docs" target="_blank">Ver documentación</a></li>
-        <li><span class="label">🙋 Usado por:</span> Actual Usuario</li>
+        <li><span class="label">🙋 Usado por:</span> {{ Auth::guard('admin') -> user() -> name }}</li>
     </ul>
+    @endif
     <br><br>
     <x-colortheme>
             <!-- Este es el interior del componente de cambio de tema -->

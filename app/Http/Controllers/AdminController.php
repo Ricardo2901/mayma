@@ -39,7 +39,8 @@ class AdminController extends Controller
 
         $admin -> save();
 
-        Storage::disk('public')->makeDirectory('admin/' . $admin->username);
+        Storage::disk('public')->makeDirectory('files/admins/' . $admin->username);
+        Storage::disk('public')->makeDirectory('files/admins/' . $admin->username . '/avatar');
 
         return redirect() -> route('pages.admin.admin');
     }
@@ -78,5 +79,9 @@ class AdminController extends Controller
 
     public function config() {
         return view('pages.admin.configure');
+    }
+
+    public function showVersion() {
+        return view('pages.admin.acerca');
     }
 }

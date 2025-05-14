@@ -46,14 +46,23 @@
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div>
-        <x-navbar>
-            <!-- Aquí puedes agregar contenido adicional dentro del componente de la barra de navegación -->
-        </x-navbar>
+        @php
+            $login = null;
+
+            if (Auth::guard('admin')->check()) {
+                $login = Auth::guard('admin')->user();
+            } elseif (Auth::guard('web')->check()) {
+                $login = Auth::guard('web')->user();
+            }
+        @endphp
+
+        <x-navbar :login="$login" />
         
     </div>
     <br>
     <br>
     <br>
+    @if (Auth::guard('web')->check())
     <h1>Acerca de la Aplicación</h1>
     <ul class="centrar">
         <li><span class="label">📛 Nombre:</span> Gestor de Archivos</li>
@@ -64,8 +73,9 @@
         <li><span class="label">🛠 Tecnologías:</span> Laravel, MySQL, Bootstrap</li>
         <li><span class="label">🔐 Seguridad:</span> Autenticación con Laravel Breeze, protección CSRF y validación de formularios.</li>
         <li><span class="label">📚 Documentación:</span> <a class="a" href="/docs" target="_blank">Ver documentación</a></li>
-        <li><span class="label">🙋 Usado por:</span> Actual Usuario</li>
+        <li><span class="label">🙋 Usado por:</span> {{ Auth::guard('web') -> user() -> name }}</li>
     </ul>
+    @endif
     <br><br>
     <x-colortheme>
             <!-- Este es el interior del componente de cambio de tema -->

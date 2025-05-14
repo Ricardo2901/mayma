@@ -30,8 +30,10 @@
     <!-- Contenido de la página -->
     <h1 class="h1" style="margin-left: 2.5%;">Todos los Usuarios</h1><br>
     <div class="mx-auto" style="width: 95%;">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button> | 
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="">Descargar Excel</button><br><br>
+        <form action="{{ route('pages.admin.excel') }}" method="GET">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarDatos">Agregar Usuario</button> | 
+            <button type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="">Descargar Excel</button><br><br>
+        </form>
         <!-- Tabla de usuarios -->   
         <table id="example" class="table table-striped" style="width:100%;">
             <thead>

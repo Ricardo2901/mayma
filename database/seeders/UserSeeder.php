@@ -42,6 +42,7 @@ class UserSeeder extends Seeder
 
         // Crear carpeta para el primer admin
         $userFolder = storage_path('app/public/files/users/' . $user -> username);
+        $userFolder = storage_path('app/public/files/users/' . $user -> username . '/avatar');
         if (!file_exists($userFolder)) {
             mkdir($userFolder, 0777, true);
         }
@@ -50,6 +51,7 @@ class UserSeeder extends Seeder
         $users = User::factory(70)->create();
         foreach ($users as $u) {
             $folder = storage_path('app/public/files/users/' . $u -> username);
+            $folder = storage_path('app/public/files/users/' . $u -> username . '/avatar');
             if (!file_exists($folder)) {
                 mkdir($folder, 0777, true);
             }

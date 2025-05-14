@@ -35,6 +35,7 @@ class AdminSeeder extends Seeder
 
         // Crear carpeta para el primer admin
         $adminFolder = storage_path('app/public/files/admins/' . $admin -> username);
+        $adminFolder = storage_path('app/public/files/admins/' . $admin -> username . '/avatar');
         if (!file_exists($adminFolder)) {
             mkdir($adminFolder, 0777, true);
         }
@@ -43,6 +44,7 @@ class AdminSeeder extends Seeder
         $admins = Admin::factory(15)->create();
         foreach ($admins as $a) {
             $folder = storage_path('app/public/files/admins/' . $a -> username);
+            $folder = storage_path('app/public/files/admins/' . $a -> username . '/avatar');
             if (!file_exists($folder)) {
                 mkdir($folder, 0777, true);
             }

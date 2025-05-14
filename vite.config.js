@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import fullReload from 'vite-plugin-full-reload';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -9,5 +10,6 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
+        fullReload(['resources/views/**/*.blade.php']),
     ],
 });

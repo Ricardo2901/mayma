@@ -42,7 +42,7 @@
             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <li><a class="dropdown-item" href="{{ route('pages.admin.perfil') }}">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">Configuracion</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.admin.version') }}">Acerca de la app</a></li>
           </ul>
         </li>
       </ul>
@@ -86,7 +86,7 @@
             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <li><a class="dropdown-item" href="{{ route('pages.users.perfil') }}">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">Configuracion</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.users.version') }}">Acerca de la app</a></li>
           </ul>
         </li>
       </ul>

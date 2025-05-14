@@ -76,7 +76,9 @@ class FileController extends Controller
 
         $archivo->delete(); // Elimina el registro de la base de datos
 
-        return redirect()->route('pages.admin.files');
+        return Auth::guard('admin')->check()
+            ? redirect()->route('pages.admin.files')
+            : redirect()->route('pages.users.files');
     }
 
     public function showPDF($id) {

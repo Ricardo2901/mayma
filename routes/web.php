@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;       //Controlador de Administradores
 use App\Http\Controllers\UserController;        //Controlador de Usuarios
 use App\Http\Controllers\FileController;        //Controlador de Archivos
 use App\Http\Controllers\AllUsersController;    //Controlador de Usuarios: Admnistradores/Usuarios
+use App\Http\Controllers\ExcelExportController; //Controlador de Excel
 use Illuminate\Support\Facades\Route;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +88,8 @@ Route::get('/posts/{post}/remove', [PostController::class, 'deleteForm']);
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
+Route::get('/excel', [ExcelExportController::class, 'export']) -> name('pages.admin.excel');    //Crea el archivo de Excel
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ADMINISTRADOR:
@@ -104,7 +107,7 @@ Route::middleware(['auth:admin']) -> group(function  () {
 
     Route::post('/admin/usuarios', [UserController::class, 'created']) -> name('pages.admin.users.create');   //Crea un nuevo usuario
 
-    Route::put('/admin/usuarios/{user}', [UserController::class, 'update']) -> name('pages.admin.users.update');   //Actualiza los datos de los usuarios
+    Route::put('/admin/usuarios/{user}', [UserController::class, 'updateAdmin']) -> name('pages.admin.users.update');   //Actualiza los datos de los usuarios
 
     Route::delete('/admin/usuarios/{user}', [UserController::class, 'delete']) -> name('pages.admin.users.delete');   //Muestra el formulario para eliminar un usuario
 
@@ -112,7 +115,11 @@ Route::middleware(['auth:admin']) -> group(function  () {
 
     Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pages.admin.perfil');     //Muestra el perfil del administrador
 
+    Route::get('/admin/acerca', [AdminController::class, 'showVersion']) -> name('pages.admin.version');     //Muestra la configuracion del usuario
+
     Route::get('/admin/all_users', [AllUsersController::class, 'index']) -> name('pages.admin.allusers');  //Muestra el perfil de los usuarios/admnistradores
+
+    Route::get('/admin/excel', [ExcelExportController::class, 'export']) -> name('pages.admin.excel');    //Crea el archivo de Excel
 
     Route::get('/admin/archivo', [FileController::class, 'indexAdmin']) -> name('pages.admin.files');            //Muestra los archivos guardados en el sistema
 
@@ -132,11 +139,13 @@ Route::middleware(['auth:web']) -> group(function () {
 
     Route::post('/user/archivo', [FileController::class, 'uploadFile']) -> name('pages.users.files.created');   //Crea un nuevo archivo
 
+    Route::delete('/user/archivo/{id}', [FileController::class, 'deleteFile']) -> name('pages.users.files.delete');   //Elimina un archivo
+
     Route::get('/user/perfil', [UserController::class, 'showProfile']) -> name('pages.users.perfil');     //Muestra el perfil del usuario
 
     Route::get('/user/acerca', [UserController::class, 'showVersion']) -> name('pages.users.version');     //Muestra la configuracion del usuario
 
-    
+    Route::put('/user/{user}', [UserController::class, 'update']) -> name('pages.users.update');   //Actualiza los datos de los usuarios
 
 });
 

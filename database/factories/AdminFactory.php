@@ -28,7 +28,7 @@ class AdminFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'avatar' => 'images/default_profile.jpg',
             'remember_token' => Str::random(10),
-            'rol'=> 'Administrador Nv.1',
+            'rol'=> 'Administrador',
         ];
     }
 

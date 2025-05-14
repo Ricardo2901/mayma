@@ -56,19 +56,49 @@
                     <td><center>
                         @if ($files -> format == 'pdf')
                             @if ($files -> username == Auth::guard('web') -> user() -> username)
-                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatospdf{{ $files -> id}}">Eliminar</button> | 
-                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> id}}">Eliminar</button> | 
+                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdfuser{{ $files -> id }}">Ver</button>
                             @else
                                 <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatospdf{{ $files -> id }}">Ver</button>
                             @endif
+                        @elseif ($files -> format == 'doc' || $files -> format == 'docx')
+                            @if ($files -> username == Auth::guard('web') -> user() -> username)
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> id}}">Eliminar</button> | 
+                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatosdocsuser{{ $files -> id }}">Ver</button>
+                            @else
+                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatosdocs{{ $files -> id }}">Ver</button>
+                            @endif
                         @else
-                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatospdf{{ $files -> id}}">Eliminar</button> | 
-                            <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $files -> id }}">Ver</button>
+                            @if ($files -> username == Auth::guard('web') -> user() -> username)
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $files -> id}}">Eliminar</button> | 
+                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $files -> id }}">Ver</button>
+                            @else
+                                <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $files -> id }}">Ver</button>
+                            @endif
                         @endif
                     </center></td>
                 </tr>
 
-                <!-- Modal para ver los datos -->
+                <!-- Modal para ver los datos del usuario autenticado -->
+                <div class="modal fade" id="verDatospdfuser{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="{{ asset('pdfjs/admin/viewer.html') }}?file=/{{ $files -> path }}" width="100%" height="700px"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                <a href="{{ asset($files -> path) }}" class="btn btn-primary" download="{{ basename($files -> name) }}">Descargar {{ strtoupper($files -> format) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para ver los datos del administrador (tiene limitaciones) -->
                 <div class="modal fade" id="verDatospdf{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -81,16 +111,15 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
-                                <a href="{{ asset($files -> path) }}" class="btn btn-primary" download="{{ basename($files -> name) }}">Descargar {{ strtoupper($files -> format) }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Modal para eliminar los datos -->
-                <div class="modal fade" id="eliminarDatospdf{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="eliminarDatos{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <form action="{{ route('pages.admin.files.delete', $files -> id) }}" method="POST">
+                        <form action="{{ route('pages.users.files.delete', $files -> id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <div class="modal-content">
@@ -111,18 +140,35 @@
                     </div>
                 </div>
 
-                <!-- Modal para ver los datos en caso de que no sea PDF -->
+                <!-- Modal para ver los datos en caso de que no sea PDF (Usuario) -->
                 <div class="modal fade" id="verDatos{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <iframe src="" frameborder="0" width="100%" height="700px">
-                                    <img src="{{ asset($files -> path) }}" alt="">
-                                </iframe>
+                                <p>Este tipo de archivo no tiene visualizacion, por favor descargalo</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>
+                                <a href="{{ asset($files -> path) }}" class="btn btn-primary" download="{{ basename($files -> name) }}">Descargar {{ strtoupper($files -> format) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para ver los datos en caso de que no sea PDF (Administrador) -->
+                <div class="modal fade" id="verDatos{{ $files -> id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Acerca del Archivo </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Este tipo de archivo no tiene acceso de visualizacion.</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cerrar</button>

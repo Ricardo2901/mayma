@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <title>Lista de Usuarios</title>
+
+    
+
 </head>
 <body>
     @php
@@ -84,7 +87,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <label fsor="inputPassword5" class="form-label">Usuario</label>
-                                    <input name="username" class="form-control" value="{{ $users -> username }}" type="text" placeholder="Default input" aria-label="default input example">
+                                    <input name="username" class="form-control" value="{{ $users -> username }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
                                     <label for="inputPassword5" class="form-label">Nombre</label>
                                     <input name="name" class="form-control" value="{{ $users -> name }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Contraseña</label>
@@ -92,17 +95,8 @@
                                     <label for="inputPassword5" class="form-label">Correo</label>
                                     <input name="email" class="form-control" value="{{ $users -> email }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Rol</label>
-                                    @if($users -> rol == 'Usuario Nv.1') <!-- Si el usuario es Usuario Nivel 1 -->
-                                        <select name="rol" class="form-select" aria-label="Default select example">
-                                            <option selected>{{ $users -> rol}}</option>
-                                            <option value="Usuario Nv.2">Usuario Nv.2</option>
-                                        </select>
-                                    @elseif($users -> rol == 'Usuario Nv.2') <!-- Si el usuario es un Usuario de Nivel 2 -->
-                                        <select name="rol" class="form-select" aria-label="Default select example">
-                                            <option selected>{{ $users -> rol}}</option>
-                                            <option value="Usuario Nv.2">Usuario Nv.1</option>
-                                        </select>
-                                    @endif
+                                    <input name="rol" class="form-control" value="Usuario" type="text" placeholder="" aria-label="default input example" disabled>
+                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
@@ -185,17 +179,29 @@
     <div class="modal fade" id="agregarDatos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Datos</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>En proceso...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Agregar</button>
-                </div>
+                <form action="{{ route('pages.admin.users.create') }}" method="post">
+                    @csrf   <!-- Token de autenticidad-->
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Datos</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="inputPassword5" class="form-label">Usuario</label>
+                        <input name="username" class="form-control" value="" type="text" placeholder="" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Nombre</label>
+                        <input name="name" class="form-control" value="" type="text" placeholder="" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Contraseña</label>
+                        <input name="password" class="form-control" value="" type="text" placeholder="" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Correo</label>
+                        <input name="email" class="form-control" value="" type="text" placeholder="" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Rol</label>
+                        <input name="rol" class="form-control" value="Usuario" type="text" placeholder="" aria-label="default input example" disabled>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                    </div>
+                </form>    
             </div>
         </div>
     </div>
