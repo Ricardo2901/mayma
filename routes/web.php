@@ -95,6 +95,8 @@ Route::get('/excel', [ExcelExportController::class, 'export']) -> name('pages.ad
 //ADMINISTRADOR:
 Route::middleware(['auth:admin']) -> group(function  () {
 
+    Route::get('/admin/home', [HomeController::class, 'adminIndex']) -> name('pages.admin.home');                 //Ruta para el home de los administradores
+
     Route::get('/admin/administradores', [AdminController::class, 'index']) -> name('pages.admin.admin');   //Muestra los datos de los admnistradores
 
     Route::post('/admin/administradores', [AdminController::class, 'created']) -> name('pages.admin.admin.create');   //Crea un nuevo admnistrador
@@ -133,7 +135,7 @@ Route::middleware(['auth:admin']) -> group(function  () {
 //USUARIOS:
 Route::middleware(['auth:web']) -> group(function () {
 
-    Route::get('/user/home', [HomeController::class, 'index']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
+    Route::get('/user/home', [HomeController::class, 'userIndex']) -> name('pages.users.home');                 //Ruta para el home de los usuarios
 
     Route::get('/user/archivo', [FileController::class, 'indexUsers']) -> name('pages.users.files');            //Muestra los archivos guardados en el sistema
 

@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="{{ route('pages.admin.home') }}">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href=" {{ route('pages.admin.files') }}">Archivos</a>
@@ -25,9 +25,7 @@
             <li><a class="dropdown-item" href="{{ route('pages.admin.allusers') }}">Todos los Usuarios</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
-        </li>
+        
       </ul>
       <!-- Mostrar nombre del usuario a la derecha -->
       <ul class="navbar-nav ms-auto">
@@ -63,15 +61,12 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="{{ route('pages.users.home') }}">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href=" {{ route('pages.users.files') }}">Archivos</a>
         </li>
         
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
-        </li>
       </ul>
       <!-- Mostrar nombre del usuario a la derecha -->
       <ul class="navbar-nav ms-auto">

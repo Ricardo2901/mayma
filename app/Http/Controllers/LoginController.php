@@ -11,11 +11,11 @@ class LoginController extends Controller
     public function index()
     {
         if (Auth::guard('admin')->check()) {
-        return redirect()->route('pages.admin.perfil');
+        return redirect()->route('pages.admin.home');
         }
 
         if (Auth::guard('web')->check()) {
-            return redirect()->route('pages.users.perfil');
+            return redirect()->route('pages.users.home');
         }
 
         return view('login'); // Mostrar login solo si no hay sesión activa
@@ -38,7 +38,7 @@ class LoginController extends Controller
             $user->save();              // Guarda los cambios
     
             // Redirige al perfil del usuario
-            return redirect()->route('pages.users.perfil')->with('login', $user);
+            return redirect()->route('pages.users.home')->with('login', $user);
     
         // Intentar login con el guard 'admin' (administradores)
         } elseif (Auth::guard('admin')->attempt($credentials)) {
@@ -51,7 +51,7 @@ class LoginController extends Controller
             $admin->save();              // Guarda los cambios
     
             // Redirige al perfil del administrador
-            return redirect()->route('pages.admin.perfil')->with('login', $admin);
+            return redirect()->route('pages.admin.home')->with('login', $admin);
     
         } else {
             // En caso de fallar la autenticación

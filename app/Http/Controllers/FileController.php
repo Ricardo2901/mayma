@@ -89,5 +89,4 @@ class FileController extends Controller
 
         return view('pages.admin.viewer', compact('pdfUrl'));
     }
-    
 }
