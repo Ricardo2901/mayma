@@ -101,7 +101,7 @@ Route::middleware(['auth:admin']) -> group(function  () {
 
     Route::post('/admin/administradores', [AdminController::class, 'created']) -> name('pages.admin.admin.create');   //Crea un nuevo admnistrador
 
-    Route::put('/admin/administradores/{admin}', [AdminController::class, 'update']) -> name('pages.admin.admin.update');   //Actualiza los datos de los admnistradores
+    Route::put('/admin/administradores/{admin}', [AdminController::class, 'updateAdmin']) -> name('pages.admin.admin.update');   //Actualiza los datos de los admnistradores
 
     Route::delete('/admin/administradores/{admin}', [AdminController::class, 'delete']) -> name('pages.admin.admin.delete');   //Muestra el formulario para eliminar un admnistrador
 
@@ -116,6 +116,8 @@ Route::middleware(['auth:admin']) -> group(function  () {
     Route::get('/admin/configuracion', [AdminController::class, 'config']) -> name('pages.admin.settings');     //Muestra la configuracion del administrador
 
     Route::get('/admin/perfil', [AdminController::class, 'showProfile']) -> name('pages.admin.perfil');     //Muestra el perfil del administrador
+
+    Route::put('/admin/{admin}', [AdminController::class, 'update']) -> name('pages.admin.update');   //Actualiza los datos del administrador
 
     Route::get('/admin/acerca', [AdminController::class, 'showVersion']) -> name('pages.admin.version');     //Muestra la configuracion del usuario
 

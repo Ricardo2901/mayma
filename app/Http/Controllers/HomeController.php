@@ -169,27 +169,106 @@ class HomeController extends Controller
         $userTotalActive = User::where('is_active', 1) -> get();
         $adminTotalActive = Admin::where('is_active', 1) -> get();
 
+        $userCountActive = User::where('is_active', 1) -> count();
+        $adminCountActive = Admin::where('is_active', 1) -> count();
+
         $allUserTotalActive = $userTotalActive -> concat($adminTotalActive);
+        $allUserCountActive = $userCountActive + $adminCountActive;
 
         /***************************************************************************************************************/
         /* USUARIOS QUE HAN ACCEDIDO EN UN TIEMPO PASADO */
 
-        $userLastLoginTotal = User::whereNotNull('last_login', now()->subDays(7)) -> get();
-        $adminLastLoginTotal = Admin::whereNotNull('last_login', now()->subDays(7)) -> get();
+        // Las ultimas 24 horas
+        $userLastLoginTotal = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays())
+            ->get();
 
-        $userLastLoginCount = User::whereNotNull('last_login', now()->subDays(7)) -> count();
-        $adminLastLoginCount = Admin::whereNotNull('last_login', now()->subDays(7)) -> count();
+        $adminLastLoginTotal = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays())
+            ->get();
 
-        $allUserLastLoginTotal = $userLastLogin -> concat($adminLastLoginTotal);
+        $userLastLoginCount = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays())
+            ->count();
+
+        $adminLastLoginCount = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays())
+            ->count();
+
+        $allUserLastLoginTotal = $userLastLoginTotal->concat($adminLastLoginTotal);
         $allUserLastLoginCount = $userLastLoginCount + $adminLastLoginCount;
+
+        // Los ultimmos 7 días
+        $userLastLoginTotal7Days = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(7))
+            ->get();
+
+        $userLastLoginCount7Days = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(7))
+            ->count();
+        
+        $adminLastLoginTotal7Days = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(7))
+            ->get();
+
+        $adminLastLoginCount7Days = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(7))
+            ->count();
+        
+        $allUserLastLoginTotal7Days = $userLastLoginTotal7Days->concat($adminLastLoginTotal7Days);
+        $allUserLastLoginCount7Days = $userLastLoginCount7Days + $adminLastLoginCount7Days;
+
+        // Los ultimos 30 días
+        $userLastLoginTotal30Days = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(30))
+            ->get();
+        
+        $userLastLoginCount30Days = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(30))
+            ->count();
+        
+        $adminLastLoginTotal30Days = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(30))
+            ->get();
+
+        $adminLastLoginCount30Days = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subDays(30))
+            ->count();
+
+        $allUserLastLoginTotal30Days = $userLastLoginTotal30Days->concat($adminLastLoginTotal30Days);
+        $allUserLastLoginCount30Days = $userLastLoginCount30Days + $adminLastLoginCount30Days;
+
+        // Hace una hora
+        $userLastLoginTotal1Hour = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subHours(1))
+            ->get();
+
+        $userLastLoginCount1Hour = User::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subHours(1))
+            ->count();
+
+        $adminLastLoginTotal1Hour = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subHours(1))
+            ->get();
+
+        $adminLastLoginCount1Hour = Admin::whereNotNull('last_login')
+            ->where('last_login', '>=', now()->subHours(1))
+            ->count();
+
+        $allUserLastLoginTotal1Hour = $userLastLoginTotal1Hour->concat($adminLastLoginTotal1Hour);
+        $allUserLastLoginCount1Hour = $userLastLoginCount1Hour + $adminLastLoginCount1Hour;
 
         /***************************************************************************************************************/
         /* USUARIOS QUE NUNCA HAN ACCEDIDO */
 
-        $userTotalNoLogin = User::where('last_login', null) -> get();
-        $adminTotalNoLogin = Admin::where('last_login', null) -> get();
+        $userNeverLoginTotal = User::whereNull('last_login') -> get();
+        $adminNeverLoginTotal = Admin::whereNull('last_login') -> get();
 
-        $allUserTotalNoLogin = $userTotalNoLogin -> concat($adminTotalNoLogin);
+        $userNeverLoginCount = User::whereNull('last_login') -> count();
+        $adminNeverLoginCount = Admin::whereNull('last_login') -> count();
+
+        $allUserNeverLoginTotal = $userNeverLoginTotal -> concat($adminNeverLoginTotal);
+        $allUserNeverLoginCount = $userNeverLoginCount + $adminNeverLoginCount;
 
         /***************************************************************************************************************/
         /* USUARIOS QUE FRECUENTEMENTE ENTRAN A LA PLATAFORMA */
@@ -198,6 +277,8 @@ class HomeController extends Controller
         /* VARIABLES QUE SE TIENEN QUE MOSTRAR EN SU PLANTILLA CORRESPONDIENTE */
 
         return view('pages.admin.home', compact(
+
+            // Archivos del usuario que esta autenticado
             'fileCount',
             'fileCountWeek',
             'fileTotalWeek',
@@ -207,6 +288,7 @@ class HomeController extends Controller
             'fileTotalLast7Days',
             'fileCountLast30Days',
             'fileTotalLast30Days',
+            // Archivos cargados por los usuarios
             'fileCountWeekTotal',
             'fileTotalWeekTotal',
             'fileCountMonthTotal',
@@ -215,21 +297,46 @@ class HomeController extends Controller
             'fileTotalLast7DaysTotal',
             'fileCountLast30DaysTotal',
             'fileTotalLast30DaysTotal',
+            // Usuarios activos en este momento
             'userTotalActive',
             'adminTotalActive',
             'allUserTotalActive',
-            //Usuarios que han accedido en un tiempo pasado
+            'userCountActive',
+            'adminCountActive',
+            'allUserCountActive',
+            // Usuarios que han accedido en un tiempo pasado
             'userLastLoginTotal',
             'adminLastLoginTotal',
             'allUserLastLoginTotal',
             'userLastLoginCount',
             'adminLastLoginCount',
             'allUserLastLoginCount',
-            //Usuarios que no han accedido
-            'userTotalNoLogin',
-            'adminTotalNoLogin',
-            'allUserTotalNoLogin',
-            //Faltan los usuarios que frecuentemente entran a la plataforma
+            'userLastLoginTotal7Days',
+            'userLastLoginCount7Days',
+            'adminLastLoginTotal7Days',
+            'adminLastLoginCount7Days',
+            'allUserLastLoginTotal7Days',
+            'allUserLastLoginCount7Days',
+            'userLastLoginTotal30Days',
+            'userLastLoginCount30Days',
+            'adminLastLoginTotal30Days',    
+            'adminLastLoginCount30Days',
+            'allUserLastLoginTotal30Days',
+            'allUserLastLoginCount30Days',
+            'userLastLoginTotal1Hour',
+            'userLastLoginCount1Hour',
+            'adminLastLoginTotal1Hour',
+            'adminLastLoginCount1Hour',
+            'allUserLastLoginTotal1Hour',
+            'allUserLastLoginCount1Hour',
+            // Usuarios que no han accedido nunca
+            'userNeverLoginTotal',
+            'adminNeverLoginTotal',
+            'allUserNeverLoginTotal',
+            'userNeverLoginCount',
+            'adminNeverLoginCount',
+            'allUserNeverLoginCount',
+            // Faltan los usuarios que frecuentemente entran a la plataforma
         ));
     }
 }

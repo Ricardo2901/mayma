@@ -41,59 +41,6 @@
             <h4 class="card-title" style="text-align: center" >Archivos subidos por este usuario</h4><br>
             <!-- Archivos Subidos Esta Semana -->
             <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col d-flex">
-                    <div class="card h-100 w-100">
-                        <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos esta Semana: {{ $fileCountWeek }}</h5><br>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Tipo de Archivo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fileTotalWeek as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ strtoupper($file -> format)}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Archivos Subidos Este Mes -->
-                <div class="col d-flex">
-                    <div class="card h-100 w-100">
-                        <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos este Mes: {{ $fileCountMonth }}</h5><br>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Tipo de Archivo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fileTotalMonth as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ strtoupper($file -> format)}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Archivos Subidos los ultimos 7 dias -->
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
@@ -109,11 +56,17 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($fileTotalLast7Days as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ strtoupper($file -> format)}}</td>
-                                        </tr>
+                                        @if ($fileCountLast7Days == 0)
+                                            <tr>
+                                                <td colspan="3">No hay archivos subidos en los últimos 7 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
+                                                <td>{{ strtoupper($file -> format)}}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -136,11 +89,17 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($fileTotalLast30Days as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ strtoupper($file -> format)}}</td>
-                                        </tr>
+                                        @if ($fileCountLast30Days == 0)
+                                            <tr>
+                                                <td colspan="3">No hay archivos subidos en los últimos 30 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
+                                                <td>{{ strtoupper($file -> format)}}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -161,59 +120,6 @@
             <h4 class="card-title" style="text-align: center" >Archivos subidos por los Usuarios/Administradores</h4><br>
             <!-- Archivos Subidos Esta Semana -->
             <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col d-flex">
-                    <div class="card h-100 w-100">
-                        <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos esta Semana: {{ $fileCountWeekTotal }}</h5><br>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fileTotalWeekTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Archivos Subidos Este Mes -->
-                <div class="col d-flex">
-                    <div class="card h-100 w-100">
-                        <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos este Mes: {{ $fileCountMonthTotal }}</h5><br>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($fileTotalMonthTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Archivos Subidos los ultimos 7 dias -->
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
@@ -229,11 +135,17 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($fileTotalLast7DaysTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
+                                        @if ($fileCountLast7DaysTotal == 0)
+                                            <tr>
+                                                <td colspan="3">No hay archivos subidos en los últimos 7 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> nameuser }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -256,11 +168,17 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($fileTotalLast30DaysTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
+                                        @if ($fileCountLast30DaysTotal == 0)
+                                            <tr>
+                                                <td colspan="3">No hay archivos subidos en los últimos 30 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> nameuser }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -276,7 +194,7 @@
 
     <div class="card mb-3" style="margin: 0 auto; width: 82.5%;">
         <div class="card-body">
-            <h4 class="card-title" style="text-align: center" >Usuarios/Administradores Activos</h4><br>
+            <h4 class="card-title" style="text-align: center" >Usuarios/Administradores Activos: {{ $allUserCountActive }}</h4><br>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -288,14 +206,20 @@
                 </thead>
                 <tbody>
                     @foreach ($allUserTotalActive as $allUserActive)
-                        <tr>
-                            <td>{{ $allUserActive -> name }}</td>
-                            <td>{{ $allUserActive -> email }}</td>
-                            @if ($allUserActive -> is_active == 1)
-                                <td>Activo</td>
-                            @endif
-                            <td>{{ $allUserActive -> rol }}</td>
-                        </tr>
+                        @if ($allUserCountActive == 0)
+                            <tr>
+                                <td colspan="4">No hay usuarios activos en este momento.</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td>{{ $allUserActive -> name }}</td>
+                                <td>{{ $allUserActive -> email }}</td>
+                                @if ($allUserActive -> is_active == 1)
+                                    <td>Activo</td>
+                                @endif
+                                <td>{{ $allUserActive -> rol }}</td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
@@ -307,28 +231,28 @@
 
     <div class="card mb-3" style="margin: 0 auto; width: 82.5%;">
         <div class="card-body">
-            <h4 class="card-title" style="text-align: center" >Archivos subidos por los Usuarios/Administradores</h4><br>
-            <!-- Archivos Subidos Esta Semana -->
+            <h4 class="card-title" style="text-align: center" >Ultima vez de los usuarios</h4><br>
+            <!-- Usuarios activos las ultimas 24 horas -->
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
                         <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos esta Semana: {{  }}</h5><br>
+                            <h5 class="card-title">Usuarios que accedieron las ultimas 24 horas: {{ $allUserLastLoginCount }}</h5><br>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Última vez</th>
+                                        <th scope="col">Rol</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($userLastLoginTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser}}</td>
-                                        </tr>
+                                    @foreach ($allUserLastLoginTotal as $file)
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> last_login) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> rol}}</td>
+                                            </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -336,26 +260,32 @@
                     </div>
                 </div>
 
-                <!-- Archivos Subidos Este Mes -->
+                <!-- Usuarios activos los ultimos 7 dias -->
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
                         <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos este Mes: {{ $fileCountMonthTotal }}</h5><br>
+                            <h5 class="card-title">Usuarios activos los ultimos 7 dias: {{ $allUserLastLoginCount7Days }}</h5><br>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Última vez</th>
+                                        <th scope="col">Rol</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($fileTotalMonthTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
+                                    @foreach ($allUserLastLoginTotal7Days as $file)
+                                        @if ($allUserLastLoginCount7Days == 0)
+                                            <tr>
+                                                <td colspan="3">No hay usuarios activos en los últimos 7 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> last_login) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> rol }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -363,26 +293,32 @@
                     </div>
                 </div>
 
-                <!-- Archivos Subidos los ultimos 7 dias -->
+                <!-- Usuarios activos los ultimos 30 dias -->
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
                         <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos los Últimos 7 dias: {{ $fileCountLast7DaysTotal }}</h5><br>
+                            <h5 class="card-title">Usuarios activos los ultimos 30 dias: {{ $allUserLastLoginCount30Days }}</h5><br>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Última vez</th>
+                                        <th scope="col">Rol</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($fileTotalLast7DaysTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
+                                    @foreach ($allUserLastLoginTotal30Days as $file)
+                                        @if ($allUserLastLoginCount30Days == 0)
+                                            <tr>
+                                                <td colspan="3">No hay usuarios activos en los últimos 30 días.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> last_login) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> rol }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -390,26 +326,32 @@
                     </div>
                 </div>
 
-                <!-- Archivos Subidos los Últimos 30 dias -->
+                <!-- Usuarios activos hace una hora -->
                 <div class="col d-flex">
                     <div class="card h-100 w-100">
                         <div class="card-body" style="text-align: center;">
-                            <h5 class="card-title">Archivos Subidos los Últimos 30 dias: {{ $fileCountLast30DaysTotal }}</h5><br>
+                            <h5 class="card-title">Usuarios activos hace una hora: {{ $allUserLastLoginCount1Hour }}</h5><br>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Fecha de Subida</th>
-                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Última vez</th>
+                                        <th scope="col">Rol</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($fileTotalLast30DaysTotal as $file)
-                                        <tr>
-                                            <td>{{ $file -> name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($file -> created_at) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> created_at) -> format('H:i') }} hrs.</td>
-                                            <td>{{ $file -> nameuser }}</td>
-                                        </tr>
+                                    @foreach ($allUserLastLoginTotal1Hour as $file)
+                                        @if ($allUserLastLoginCount1Hour == 0)
+                                            <tr>
+                                                <td colspan="3">No hay usuarios activos en la última hora.</td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $file -> name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($file -> last_login) -> format('d/m/Y') }} a las {{ \Carbon\Carbon::parse($file -> last_login) -> format('H:i') }} hrs.</td>
+                                                <td>{{ $file -> rol }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

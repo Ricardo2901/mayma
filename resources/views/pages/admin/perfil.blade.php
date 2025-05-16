@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
+    <title>Perfil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
@@ -85,31 +85,69 @@
     </ul>
     @endif
 
-    <!-- Modal para actualizar los datos -->
+   <!-- Modal para actualizar los datos -->
     <div class="modal fade" id="editarPerfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="">
+        <form action=" {{ route('pages.admin.update', Auth::guard('admin') -> user() -> id) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Datos</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <label fsor="inputPassword5" class="form-label">Usuario</label>
+                        <input name="username" class="form-control" value="{{ Auth::guard('admin') -> user() -> username }}" type="text" placeholder="Default input" aria-label="default input example" disabled>
+                        <label for="inputPassword5" class="form-label">Nombre</label>
+                        <input name="name" class="form-control" value="{{ Auth::guard('admin') -> user() -> name }}" type="text" placeholder="Default input" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Contraseña</label>
+                        <input name="password" class="form-control" value="password" type="text" placeholder="Default input" aria-label="default input example" require>
+                        <label for="inputPassword5" class="form-label">Correo</label>
+                        <input name="email" class="form-control" value="{{ Auth::guard('admin') -> user() -> email }}" type="text" placeholder="Default input" aria-label="default input example">
+                        <label for="inputPassword5" class="form-label">Rol</label>
+                        <input name="rol" class="form-control" value="Usuario" type="text" placeholder="" aria-label="default input example" disabled>
+                        <label for="inputPassword5" class="form-label">Foto de Perfil</label>
+                        <input name="avatar" type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-eliminar" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary btn-azul">Actualizar Datos</button>
+                        <button type="submit" class="btn btn-primary btn-azul">Actualizar Datos</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Auth::guard('admin') -> user() -> id == 1)
+    <!-- Modal para eliminar los datos -->
+    <div class="modal fade" id="eliminarPerfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso Denegado!!!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Estos este perfil no se pueden eliminar.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" >Cerrar</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    @else
 
     <!-- Modal para eliminar los datos -->
     <div class="modal fade" id="eliminarPerfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="">
+            <form action="route('logout')" method="post">
+                @csrf
+                @method('DELETE')
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Advertencia!!!</h1>
@@ -121,12 +159,34 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#error">Eliminar</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    @endif
+
+    <!-- Modal de error por querer eliminar los datos -->
+    <div class="modal fade" id="error" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Acceso denegado!!!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Error: No se puede eliminar este perfil, para ello, necesitas el permiso del administrador.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <br><br>
     <x-basicFooter></x-basicFooter>
     <x-script></x-script>

@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
+    <title>Acerca de la App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
@@ -72,7 +72,7 @@
         <li><span class="label">📄 Licencia:</span> MIT</li>
         <li><span class="label">🛠 Tecnologías:</span> Laravel, MySQL, Bootstrap</li>
         <li><span class="label">🔐 Seguridad:</span> Autenticación con Laravel Breeze, protección CSRF y validación de formularios.</li>
-        <li><span class="label">📚 Documentación:</span> <a class="a" href="/docs" target="_blank">Ver documentación</a></li>
+        <!--<li><span class="label">📚 Documentación:</span> <a class="a" href="/docs" target="_blank">Ver documentación</a></li>-->
         <li><span class="label">🙋 Usado por:</span> {{ Auth::guard('web') -> user() -> name }}</li>
     </ul>
     @endif

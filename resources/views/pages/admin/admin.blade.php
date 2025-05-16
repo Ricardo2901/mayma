@@ -49,6 +49,7 @@
                     <th><center>Acciones</center></th>
                 </tr>
             </thead>
+            @if (Auth::guard('admin')->check()) <!-- Si el usuario es un administrador -->
             <tbody>
                 @foreach ($admin as $admins)
                 <tr>
@@ -68,10 +69,14 @@
                     <td>{{ $admins -> is_active == 1 ? 'Activo' : 'Inactivo' }}</td> <!-- Estado del usuario -->
                     <!-- Botones de acción para editar, eliminar y ver datos -->
                     <td><center>
-                        <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $admins -> id }}">Editar</button> | 
-                        <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $admins -> id }}">Eliminar</button> | 
-                        <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $admins -> id }}">Ver</button>
-                    </center></td>
+                        @if ($admins -> id == Auth::guard('admin') -> user() -> id ) <!-- Si el usuario es el mismo que el que inicio sesion -->
+                            <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $admins -> id }}">Ver</button>
+                        @else <!-- Si el usuario no es el mismo que el que inicio sesion -->
+                            <button type="button" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#editarDatos{{ $admins -> id }}">Editar</button> | 
+                            <button type="button" class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarDatos{{ $admins -> id }}">Eliminar</button> | 
+                            <button type="button" class="btn btn-info btn-ver" data-bs-toggle="modal" data-bs-target="#verDatos{{ $admins -> id }}">Ver</button>
+                        @endif
+                        </center></td>
                 </tr>
 
                 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -132,7 +137,7 @@
                                     <label for="inputPassword5" class="form-label">Nombre</label>
                                     <input name="name" class="form-control" value="{{ $admins -> name }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Contraseña</label>
-                                    <input name="password" class="form-control" value="******" type="text" placeholder="Default input" aria-label="default input example">
+                                    <input name="password" class="form-control" value="password" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Correo</label>
                                     <input name="email" class="form-control" value="{{ $admins -> email }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Rol</label>
@@ -200,6 +205,7 @@
                 </div>
                 @endforeach  
             </tbody>
+            @endif
         </table>
     </div>
 

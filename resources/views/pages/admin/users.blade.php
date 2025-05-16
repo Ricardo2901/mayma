@@ -91,7 +91,7 @@
                                     <label for="inputPassword5" class="form-label">Nombre</label>
                                     <input name="name" class="form-control" value="{{ $users -> name }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Contraseña</label>
-                                    <input name="password" class="form-control" value="******" type="text" placeholder="Default input" aria-label="default input example">
+                                    <input name="password" class="form-control" value="password" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Correo</label>
                                     <input name="email" class="form-control" value="{{ $users -> email }}" type="text" placeholder="Default input" aria-label="default input example">
                                     <label for="inputPassword5" class="form-label">Rol</label>
